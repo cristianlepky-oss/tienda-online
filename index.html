@@ -1,264 +1,297 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>PETPOINT | Necochea</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PetPoint | Tu App de Mascotas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #111827;
-            --accent: #f59e0b;
-            --success: #25d366;
-            --bg: #f9fafb;
-            --card: #ffffff;
-            --radius: 24px;
+            --bg-color: #f4f6f8;
+            --brand-color: #ff6b6b; /* Un rojo/coral vibrante que da hambre y llama la atención */
+            --text-dark: #2d3436;
+            --card-bg: #ffffff;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            margin: 0; 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg); 
-            color: var(--primary);
-            padding-bottom: 120px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Nunito', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body { background-color: var(--bg-color); color: var(--text-dark); padding-bottom: 100px; }
 
-        /* Hero / Portada */
+        /* PORTADA MEJORADA */
         .hero {
-            height: 35vh;
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%), 
-                        url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=1000');
-            background-size: cover;
-            background-position: center;
+            position: relative;
+            height: 38vh;
+            min-height: 280px;
+            /* El Golden Retriever de portada, con un filtro oscuro para leer el texto */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%), 
+                        url('https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=1000&auto=format&fit=crop') center/cover;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
+            justify-content: flex-end;
             padding: 25px;
             color: white;
-            border-radius: 0 0 35px 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .hero h1 { margin: 0; font-size: 34px; font-weight: 800; }
-        .hero p { margin: 5px 0 0; font-size: 14px; font-weight: 600; color: #fbbf24; }
+        .hero h1 { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 5px; }
+        .hero p { font-size: 1.1rem; font-weight: 700; color: #ffd32a; }
 
-        /* Buscador Moderno */
-        .search-area { padding: 0 20px; margin-top: -25px; }
-        .search-input {
-            width: 100%;
-            height: 55px;
-            border: none;
-            border-radius: 20px;
-            padding: 0 20px;
-            font-size: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            outline: none;
+        /* BUSCADOR FLOTANTE */
+        .search-container { padding: 0 20px; transform: translateY(-25px); position: relative; z-index: 10; }
+        .search-bar {
+            width: 100%; padding: 18px 20px; border-radius: 20px; border: none;
+            font-size: 1rem; font-weight: 700; color: var(--text-dark);
+            background: white; box-shadow: 0 10px 20px rgba(0,0,0,0.08); outline: none;
         }
 
-        /* Filtros */
-        .filters { display: flex; gap: 10px; overflow-x: auto; padding: 20px; scrollbar-width: none; }
-        .filters::-webkit-scrollbar { display: none; }
-        .chip {
-            padding: 10px 22px;
-            background: white;
-            border-radius: 50px;
-            white-space: nowrap;
-            font-weight: 700;
-            font-size: 14px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            cursor: pointer;
-            border: 2px solid transparent;
+        /* FILTROS TIPO APP */
+        .category-scroll {
+            display: flex; gap: 12px; overflow-x: auto; padding: 5px 20px 20px 20px;
+            scrollbar-width: none; /* Oculta scrollbar en Firefox */
         }
-        .chip.active { background: var(--primary); color: white; }
-
-        /* Productos */
-        .grid { padding: 0 20px; display: grid; gap: 15px; }
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-            border: 1px solid #f1f5f9;
+        .category-scroll::-webkit-scrollbar { display: none; /* Oculta scrollbar en Chrome/Safari */ }
+        
+        .cat-btn {
+            background: white; padding: 10px 24px; border-radius: 30px;
+            font-weight: 800; font-size: 0.95rem; color: #636e72;
+            border: 2px solid transparent; box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+            cursor: pointer; white-space: nowrap; transition: 0.2s;
         }
-        .card img { width: 85px; height: 85px; border-radius: 18px; object-fit: cover; }
-        .card-info { flex: 1; }
-        .card-brand { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; }
-        .card-name { font-size: 16px; font-weight: 700; margin: 2px 0; }
-        .card-price { font-size: 18px; font-weight: 800; color: var(--primary); }
+        .cat-btn.active { background: var(--brand-color); color: white; border-color: var(--brand-color); }
 
-        /* Barra Inferior (Pedido) */
-        .order-bar {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: white;
-            padding: 20px;
-            border-radius: 30px 30px 0 0;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.08);
-            transform: translateY(100%);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* GRILLA DE PRODUCTOS */
+        .products-grid { padding: 0 20px; display: grid; gap: 15px; }
+        .product-card {
+            background: var(--card-bg); border-radius: 20px; padding: 15px;
+            display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03); cursor: pointer; transition: transform 0.1s;
+        }
+        .product-card:active { transform: scale(0.97); }
+        .product-img { width: 90px; height: 90px; border-radius: 15px; object-fit: cover; background: #eee; }
+        .product-info { flex: 1; }
+        .brand-tag { font-size: 0.75rem; text-transform: uppercase; font-weight: 900; color: #b2bec3; letter-spacing: 1px; }
+        .product-title { font-size: 1.1rem; font-weight: 800; margin: 4px 0; line-height: 1.2; }
+        .product-price { font-size: 1.3rem; font-weight: 900; color: var(--brand-color); }
+
+        /* BOTTOM SHEET (CARRITO FLOTANTE) - EL FIX MÁS IMPORTANTE */
+        .bottom-sheet {
+            position: fixed; bottom: 0; left: 0; right: 0; background: white;
+            padding: 25px 20px; border-top-left-radius: 30px; border-top-right-radius: 30px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+            transform: translateY(110%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1);
             z-index: 1000;
         }
-        .order-bar.show { transform: translateY(0); }
-
-        .btn-send {
-            background: var(--success);
-            color: white;
-            width: 100%;
-            height: 55px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 17px;
-            gap: 10px;
-            margin-top: 15px;
+        .bottom-sheet.open { transform: translateY(0); }
+        
+        .close-btn {
+            position: absolute; top: 15px; right: 20px;
+            background: #f1f2f6; border: none; border-radius: 50%;
+            width: 35px; height: 35px; font-size: 1.2rem; font-weight: bold;
+            color: #57606f; cursor: pointer;
         }
 
-        /* Admin */
-        .admin-view {
-            position: fixed; inset: 0; background: #f9fafb; z-index: 2000;
-            padding: 30px; display: none; overflow-y: auto;
+        .checkout-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 18px; border-radius: 20px; border: none;
+            background: #25D366; color: white; font-size: 1.2rem; font-weight: 900;
+            text-decoration: none; margin-top: 20px; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
         }
-        .input-admin { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; }
+
+        /* MODAL PANEL DE CONTROL */
+        .admin-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px;
+        }
+        .admin-content { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 25px; position: relative; }
+        .admin-input { width: 100%; padding: 15px; margin: 10px 0 20px 0; border: 2px solid #eee; border-radius: 15px; font-size: 1rem; font-weight: 700;}
+        .admin-btn { width: 100%; padding: 15px; background: var(--text-dark); color: white; border: none; border-radius: 15px; font-weight: bold; font-size: 1.1rem; }
+        
+        .gear-icon { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.3); border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 1.5rem; cursor: pointer; z-index: 100; backdrop-filter: blur(5px); }
     </style>
 </head>
 <body>
 
-    <div id="hero" class="hero">
-        <div>
-            <h1>PETPOINT</h1>
-            <p id="promo-display">Envíos gratis: Mié, Vie y Sáb</p>
+    <header class="hero">
+        <button class="gear-icon" onclick="toggleAdmin(true)">⚙️</button>
+        <h1>PetPoint</h1>
+        <p id="envio-promo">Cargando promo...</p>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Buscar alimento...">
+    </div>
+
+    <div class="category-scroll" id="categoryTabs">
+        <button class="cat-btn active" data-cat="Todos">Todos</button>
+        <button class="cat-btn" data-cat="Perros">Perros 🐶</button>
+        <button class="cat-btn" data-cat="Gatos">Gatos 🐱</button>
+    </div>
+
+    <div class="products-grid" id="catalogo">
         </div>
-        <button onclick="document.getElementById('admin-modal').style.display='block'" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; border-radius:50%; width:40px; height:40px; color:white;">⚙️</button>
+
+    <div class="bottom-sheet" id="orderSheet">
+        <button class="close-btn" onclick="cerrarPedido()">✕</button>
+        <div style="margin-right: 40px;">
+            <p id="orderBrand" class="brand-tag">MARCA</p>
+            <h2 id="orderTitle" style="font-weight: 900; font-size: 1.4rem; margin: 5px 0;">Nombre del Producto</h2>
+            <p id="orderPrice" style="color: var(--brand-color); font-size: 1.8rem; font-weight: 900;">$0</p>
+        </div>
+        <a href="#" id="btnWhatsApp" class="checkout-btn" target="_blank">
+            💬 Confirmar Pedido
+        </a>
     </div>
 
-    <div class="search-area">
-        <input type="text" id="finder" class="search-input" placeholder="Buscar alimento o accesorio..." onkeyup="filter()">
-    </div>
-
-    <div class="filters">
-        <div class="chip active" onclick="setCat('Todos', this)">Todos</div>
-        <div class="chip" onclick="setCat('Perros', this)">Perros 🐶</div>
-        <div class="chip" onclick="setCat('Gatos', this)">Gatos 🐱</div>
-    </div>
-
-    <div id="main-grid" class="grid"></div>
-
-    <div id="order-bar" class="order-bar">
-        <div style="display:flex; justify-content:space-between; align-items:flex-end">
-            <div>
-                <span id="p-brand" style="font-size:12px; font-weight:800; color:var(--accent)">MARCA</span>
-                <div id="p-title" style="font-size:18px; font-weight:800">Nombre Producto</div>
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-content">
+            <button class="close-btn" style="top: -15px; right: -15px; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onclick="toggleAdmin(false)">✕</button>
+            <h2 style="margin-bottom: 20px;">Panel PetPoint</h2>
+            
+            <div id="loginPnl">
+                <label style="font-weight: 700; color: #555;">Contraseña de acceso:</label>
+                <input type="password" id="adminPass" class="admin-input" placeholder="Ingresa 0007">
+                <button class="admin-btn" onclick="validarAdmin()">Entrar</button>
             </div>
-            <div id="p-cost" style="font-size:22px; font-weight:800">$ 0.00</div>
-        </div>
-        <a href="#" id="wa-btn" class="btn-send" target="_blank">Pedir por WhatsApp</a>
-    </div>
 
-    <div id="admin-modal" class="admin-view">
-        <h2>Panel de Control</h2>
-        <div id="login-zone">
-            <input type="password" id="pass" class="input-admin" placeholder="Contraseña (0007)">
-            <button onclick="login()" class="btn-send" style="background:var(--primary)">Ingresar</button>
-            <button onclick="document.getElementById('admin-modal').style.display='none'" style="width:100%; border:none; background:none; margin-top:15px">Cancelar</button>
-        </div>
-        <div id="config-zone" style="display:none">
-            <label>WhatsApp (con código de país):</label>
-            <input type="text" id="cfg-wa" class="input-admin">
-            <label>Texto de Promoción:</label>
-            <input type="text" id="cfg-promo" class="input-admin">
-            <button onclick="saveAdmin()" class="btn-send">Guardar cambios</button>
+            <div id="configPnl" style="display: none;">
+                <label style="font-weight: 700; color: #555;">WhatsApp Vendedor (Ej: 5492262...):</label>
+                <input type="number" id="inputWa" class="admin-input">
+                
+                <label style="font-weight: 700; color: #555;">Texto de Promoción:</label>
+                <input type="text" id="inputPromo" class="admin-input">
+                
+                <button class="admin-btn" style="background: var(--brand-color);" onclick="guardarConfig()">💾 Guardar Cambios</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Datos iniciales
-        let db = {
-            wa: "5492262655225",
-            promo: "Miércoles, viernes y sábado envío gratis",
-            items: [
-                { id: 1, cat: "Perros", b: "Old Prince", n: "Equilibrium Adulto", p: 64700, img: "https://images.unsplash.com/photo-1589924691995-ad0029ecbb68?w=400" },
-                { id: 2, cat: "Perros", b: "Kongo", n: "Natural Adulto", p: 30200, img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400" },
-                { id: 3, cat: "Gatos", b: "Royal Canin", n: "Kitten Gato", p: 37500, img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400" },
-                { id: 4, cat: "Perros", b: "Royal Canin", n: "Medium Adult", p: 155200, img: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400" }
-            ]
-        };
+        // Todo el código se ejecuta SÓLO cuando la página está 100% lista.
+        document.addEventListener('DOMContentLoaded', () => {
 
-        let currentCat = "Todos";
+            // 1. BASE DE DATOS Y CONFIGURACIÓN INICIAL
+            let config = {
+                telefono: "5492262655225", // Cambiar por tu número real
+                promoText: "Envío GRATIS hoy en Necochea 🚀"
+            };
 
-        function renderItems() {
-            const container = document.getElementById('main-grid');
-            const search = document.getElementById('finder').value.toLowerCase();
-            
-            const html = db.items
-                .filter(i => (currentCat === "Todos" || i.cat === currentCat) && 
-                             (i.b.toLowerCase().includes(search) || i.n.toLowerCase().includes(search)))
-                .map(i => `
-                    <div class="card" onclick="openOrder(${i.id})">
-                        <img src="${i.img}">
-                        <div class="card-info">
-                            <div class="card-brand">${i.b}</div>
-                            <div class="card-name">${i.n}</div>
-                            <div class="card-price">$${i.p.toLocaleString('es-AR')}</div>
+            const productos = [
+                { id: 1, cat: "Perros", marca: "Old Prince", nombre: "Equilibrium Adulto 15kg", precio: 64700, img: "https://images.unsplash.com/photo-1589924691995-ad0029ecbb68?w=300&q=80" },
+                { id: 2, cat: "Perros", marca: "Kongo", nombre: "Natural Adulto 20kg", precio: 30200, img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=300&q=80" },
+                { id: 3, cat: "Gatos", marca: "Royal Canin", nombre: "Kitten Gato 7.5kg", precio: 37500, img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&q=80" },
+                { id: 4, cat: "Perros", marca: "Royal Canin", nombre: "Medium Adult 15kg", precio: 155200, img: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=300&q=80" }
+            ];
+
+            let categoriaActual = "Todos";
+
+            // 2. INTENTO DE CARGAR DATOS GUARDADOS EN EL TELÉFONO
+            try {
+                const guardado = localStorage.getItem('petpoint_config');
+                if(guardado) { config = JSON.parse(guardado); }
+            } catch(e) { console.log("Navegador bloquea LocalStorage, usando datos por defecto."); }
+
+            // Aplicar la promo al cargar
+            document.getElementById('envio-promo').innerText = config.promoText;
+
+            // 3. FUNCIÓN PARA DIBUJAR LOS PRODUCTOS EN PANTALLA
+            const renderizarCatalogo = () => {
+                const busqueda = document.getElementById('searchInput').value.toLowerCase();
+                const contenedor = document.getElementById('catalogo');
+                
+                const filtrados = productos.filter(p => {
+                    const coincideCat = (categoriaActual === "Todos") || (p.cat === categoriaActual);
+                    const coincideTexto = p.marca.toLowerCase().includes(busqueda) || p.nombre.toLowerCase().includes(busqueda);
+                    return coincideCat && coincideTexto;
+                });
+
+                if(filtrados.length === 0) {
+                    contenedor.innerHTML = '<p style="text-align:center; padding: 20px; font-weight:bold; color:#888;">No encontramos ese alimento.</p>';
+                    return;
+                }
+
+                contenedor.innerHTML = filtrados.map(p => `
+                    <div class="product-card" onclick="abrirPedido(${p.id})">
+                        <img src="${p.img}" class="product-img" alt="${p.nombre}">
+                        <div class="product-info">
+                            <div class="brand-tag">${p.marca}</div>
+                            <h3 class="product-title">${p.nombre}</h3>
+                            <div class="product-price">$${p.precio.toLocaleString('es-AR')}</div>
                         </div>
                     </div>
                 `).join('');
-            
-            container.innerHTML = html || '<p style="text-align:center">No hay resultados</p>';
-        }
+            };
 
-        function openOrder(id) {
-            const item = db.items.find(x => x.id === id);
-            document.getElementById('p-brand').innerText = item.b;
-            document.getElementById('p-title').innerText = item.n;
-            document.getElementById('p-cost').innerText = "$" + item.p.toLocaleString('es-AR');
-            
-            const text = `Hola PetPoint! 👋\nQuiero encargar:\n✅ ${item.b} - ${item.n}\n💰 Total: $${item.p.toLocaleString('es-AR')}`;
-            document.getElementById('wa-btn').href = `https://wa.me/${db.wa}?text=${encodeURIComponent(text)}`;
-            
-            document.getElementById('order-bar').classList.add('show');
-        }
+            // 4. LÓGICA DE INTERACCIÓN DEL USUARIO
+            document.getElementById('searchInput').addEventListener('input', renderizarCatalogo);
 
-        function setCat(cat, el) {
-            currentCat = cat;
-            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            el.classList.add('active');
-            renderItems();
-        }
+            document.querySelectorAll('.cat-btn').forEach(boton => {
+                boton.addEventListener('click', (e) => {
+                    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    categoriaActual = e.target.getAttribute('data-cat');
+                    renderizarCatalogo();
+                });
+            });
 
-        function filter() { renderItems(); }
+            // 5. APERTURA Y CIERRE DEL CARRITO
+            window.abrirPedido = (id) => {
+                const prod = productos.find(p => p.id === id);
+                if(!prod) return;
 
-        // Funciones Admin
-        function login() {
-            if(document.getElementById('pass').value === '0007') {
-                document.getElementById('login-zone').style.display = 'none';
-                document.getElementById('config-zone').style.display = 'block';
-                document.getElementById('cfg-wa').value = db.wa;
-                document.getElementById('cfg-promo').value = db.promo;
-            } else { alert("Clave incorrecta"); }
-        }
+                document.getElementById('orderBrand').innerText = prod.marca;
+                document.getElementById('orderTitle').innerText = prod.nombre;
+                document.getElementById('orderPrice').innerText = "$" + prod.precio.toLocaleString('es-AR');
+                
+                // Formato infalible para la API de WhatsApp
+                const mensaje = `Hola PetPoint! 👋\nQuisiera encargar una bolsa de:\n\n🐾 *${prod.marca} - ${prod.nombre}*\n💰 Precio: $${prod.precio.toLocaleString('es-AR')}\n\n¿Tienen stock para envío?`;
+                const urlWa = `https://api.whatsapp.com/send?phone=${config.telefono}&text=${encodeURIComponent(mensaje)}`;
+                
+                document.getElementById('btnWhatsApp').href = urlWa;
+                document.getElementById('orderSheet').classList.add('open');
+            };
 
-        function saveAdmin() {
-            db.wa = document.getElementById('cfg-wa').value;
-            db.promo = document.getElementById('cfg-promo').value;
-            document.getElementById('promo-display').innerText = db.promo;
-            localStorage.setItem('petpoint_db', JSON.stringify(db));
-            alert("¡Guardado!");
-            document.getElementById('admin-modal').style.display = 'none';
-        }
+            window.cerrarPedido = () => { document.getElementById('orderSheet').classList.remove('open'); };
 
-        // Cargar datos guardados si existen
-        const saved = localStorage.getItem('petpoint_db');
-        if(saved) {
-            db = JSON.parse(saved);
-            document.getElementById('promo-display').innerText = db.promo;
-        }
+            // 6. FUNCIONES DEL PANEL DE CONTROL
+            window.toggleAdmin = (mostrar) => {
+                document.getElementById('adminModal').style.display = mostrar ? 'flex' : 'none';
+                if(!mostrar) {
+                    // Resetear panel al cerrar
+                    document.getElementById('loginPnl').style.display = 'block';
+                    document.getElementById('configPnl').style.display = 'none';
+                    document.getElementById('adminPass').value = '';
+                }
+            };
 
-        renderItems();
+            window.validarAdmin = () => {
+                if(document.getElementById('adminPass').value === '0007') {
+                    document.getElementById('loginPnl').style.display = 'none';
+                    document.getElementById('configPnl').style.display = 'block';
+                    document.getElementById('inputWa').value = config.telefono;
+                    document.getElementById('inputPromo').value = config.promoText;
+                } else {
+                    alert("Clave incorrecta. Intentá de nuevo.");
+                }
+            };
+
+            window.guardarConfig = () => {
+                config.telefono = document.getElementById('inputWa').value;
+                config.promoText = document.getElementById('inputPromo').value;
+                document.getElementById('envio-promo').innerText = config.promoText;
+                
+                try {
+                    localStorage.setItem('petpoint_config', JSON.stringify(config));
+                } catch(e) { /* Ignorar error de almacenamiento */ }
+                
+                alert("¡Configuración guardada exitosamente!");
+                window.toggleAdmin(false);
+            };
+
+            // INICIAR LA APP
+            renderizarCatalogo();
+        });
     </script>
 </body>
 </html>
