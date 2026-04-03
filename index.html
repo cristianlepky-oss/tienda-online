@@ -1,631 +1,316 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PETPOINT | Catalogo + Panel</title>
-  <style>
-    :root{
-      --bg:#f6f7fb;--card:#ffffff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--brand:#111827;--brand2:#374151;
-      --soft:#f3f4f6;--soft2:#eef2ff;--ok:#16a34a;--warn:#ea580c;--wa:#25d366;--wa2:#1da851;--shadow:0 12px 28px rgba(15,23,42,.06)
-    }
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#f8fafc,#f3f4f6);color:var(--text)}
-    img{max-width:100%;display:block}
-    .wrap{max-width:1240px;margin:0 auto;padding:16px}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
-    .brandTag{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#111827;color:#fff;font-weight:800;letter-spacing:.02em}
-    .btn,.btn2,.btn3,.chip,.iconBtn{border:1px solid var(--line);background:#fff;color:var(--text);cursor:pointer;transition:.15s;font:inherit}
-    .btn{height:48px;padding:0 18px;border-radius:16px;font-weight:700}.btn:hover,.chip:hover,.iconBtn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}.btn.soft{background:var(--soft)}
-    .btn.wa{background:var(--wa);border-color:var(--wa);color:#fff}.btn.wa:hover{background:var(--wa2)}
-    .btn.warn{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
-    .iconBtn{width:44px;height:44px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center}
-    .hidden{display:none !important}
-    .grid{display:grid;gap:16px}
-    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:0;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:var(--shadow)}
-    .heroLeft{padding:30px}
-    .heroRight{border-left:1px solid var(--line);background:#f8fafc;display:grid;grid-template-rows:1fr 1fr}
-    .heroImage{position:relative;min-height:240px;background-size:cover;background-position:center}
-    .heroImage::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,24,39,.1),rgba(17,24,39,.35))}
-    .heroDog{background-image:url('https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80')}
-    .heroCat{background-image:url('https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=1200&q=80')}
-    .heroLabel{position:absolute;left:16px;bottom:16px;z-index:1;padding:10px 14px;border-radius:16px;background:rgba(255,255,255,.92);font-weight:700}
-    .badges,.pills,.rowBtns{display:flex;flex-wrap:wrap;gap:8px}.badge,.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px}
-    .badge.dark{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:800}
-    h1{font-size:48px;line-height:1.02;letter-spacing:-.04em;margin:14px 0}.muted{color:var(--muted)}
-    .miniCards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.mini{padding:14px;border:1px solid var(--line);background:#fff;border-radius:18px}.mini strong{display:block;margin-top:4px}
-    .layout{display:grid;grid-template-columns:1fr 380px;gap:16px;margin-top:16px}
-    .card{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow)}
-    .pad{padding:20px}
-    .toolbar{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:10px}
-    .input,.select,.textarea{width:100%;height:50px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:0 14px;font-size:15px;color:var(--text)}
-    .textarea{height:110px;padding:12px 14px;resize:vertical}
-    .toggle{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:10px}
-    .switchWrap{display:flex;align-items:center;gap:10px}.switch{position:relative;width:52px;height:30px;display:inline-block}.switch input{display:none}.slider{position:absolute;inset:0;background:#d1d5db;border-radius:999px;transition:.15s}.slider:before{content:'';position:absolute;width:22px;height:22px;left:4px;top:4px;background:#fff;border-radius:50%;transition:.15s;box-shadow:0 2px 8px rgba(15,23,42,.15)}.switch input:checked + .slider{background:var(--brand)}.switch input:checked + .slider:before{transform:translateX(22px)}
-    .products{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.product{padding:16px;border:1px solid var(--line);border-radius:22px;background:#fff;cursor:pointer;transition:.15s}.product:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.product.active{box-shadow:inset 0 0 0 1px var(--brand);border-color:var(--brand)}
-    .prodTop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.prodBrand{font-size:14px;color:var(--muted)}.prodName{font-size:18px;font-weight:800;line-height:1.18;margin-top:4px;min-height:44px}.prodPrice{margin-top:14px;font-size:26px;font-weight:900;letter-spacing:-.03em}
-    .sticky{position:sticky;top:16px}.selbox{background:var(--brand);color:#fff;border-radius:22px;padding:18px}.selbox small{color:#cbd5e1}.pricing{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.pricing div{background:rgba(255,255,255,.08);padding:12px;border-radius:16px}.pricing strong{display:block;margin-top:4px;font-size:22px}
-    .lineBox{background:var(--soft);border-radius:18px;padding:14px;margin-top:12px}.lineRow{display:flex;justify-content:space-between;gap:10px;font-size:14px}.lineRow + .lineRow{margin-top:8px}
-    .chips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.chip{height:42px;border-radius:14px;background:var(--soft);font-weight:800}.chip.active{background:var(--brand);border-color:var(--brand);color:#fff}
-    .message{white-space:pre-line;background:var(--soft);border-radius:18px;padding:14px;line-height:1.7;font-size:14px;color:#334155}
-    .sectionTitle{font-size:20px;font-weight:900;margin:0 0 6px}.sub{font-size:14px;color:var(--muted)}
-    .adminWrap{margin-top:18px}.adminHead{display:flex;justify-content:space-between;gap:12px;align-items:center}.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:2px}.tab{padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;white-space:nowrap;cursor:pointer;font-weight:700}.tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
-    .panelGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.panelGrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.inline2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.inline3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.rangeVal{font-weight:900}
-    .tableWrap{overflow:auto;border:1px solid var(--line);border-radius:20px}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.table th{position:sticky;top:0;background:#f8fafc;z-index:1}.table input,.table select{min-width:90px;width:100%;height:38px;border:1px solid var(--line);border-radius:10px;padding:0 10px}
-    .zoneCard{padding:16px;border:1px solid var(--line);border-radius:20px;background:#fff}.listBox{display:grid;gap:10px}.helper{font-size:12px;color:var(--muted)}
-    .modal{position:fixed;inset:0;background:rgba(15,23,42,.35);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}.modalCard{width:min(460px,100%);background:#fff;border-radius:28px;border:1px solid var(--line);box-shadow:0 20px 50px rgba(15,23,42,.18)}
-    .foot{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
-    @media (max-width:1100px){.hero,.layout{grid-template-columns:1fr}.heroRight{border-left:0;border-top:1px solid var(--line)}.sticky{position:static}.products{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:760px){h1{font-size:34px}.wrap{padding:12px}.heroLeft,.pad{padding:18px}.miniCards,.toolbar,.products,.panelGrid,.panelGrid3,.inline2,.inline3{grid-template-columns:1fr}.heroImage{min-height:180px}.chips{grid-template-columns:repeat(2,1fr)}.table th,.table td{padding:8px;font-size:12px}}
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>PETPOINT | Alimento para Mascotas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #111827;
+            --accent: #f59e0b; /* Color miel/perro */
+            --success: #22c55e;
+            --bg: #f9fafb;
+            --card: #ffffff;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --radius: 20px;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        .container { max-width: 500px; margin: 0 auto; padding-bottom: 100px; }
+
+        /* PORTADA CON EL GOLDEN */
+        .hero {
+            position: relative;
+            height: 40vh;
+            min-height: 300px;
+            background: url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat;
+            display: flex;
+            align-items: flex-end;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 60%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+            color: white;
+            width: 100%;
+        }
+
+        .hero h1 { font-size: 32px; margin: 0; font-weight: 800; letter-spacing: -1px; }
+        .hero p { opacity: 0.9; margin: 5px 0 0; font-size: 14px; }
+
+        /* BUSCADOR Y FILTROS */
+        .search-box {
+            padding: 20px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 60px;
+            background: var(--card);
+            border: none;
+            border-radius: var(--radius);
+            padding: 0 25px;
+            font-size: 16px;
+            box-shadow: var(--shadow);
+            outline: none;
+        }
+
+        .filter-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 20px;
+            scrollbar-width: none;
+        }
+        .filter-scroll::-webkit-scrollbar { display: none; }
+
+        .chip {
+            padding: 8px 20px;
+            background: var(--card);
+            border-radius: 99px;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .chip.active { background: var(--primary); color: white; }
+
+        /* LISTA DE PRODUCTOS */
+        .product-grid { padding: 20px; display: grid; gap: 20px; }
+
+        .p-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+        }
+
+        .p-card:active { transform: scale(0.98); }
+
+        .p-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+            background: #f3f4f6;
+            object-fit: cover;
+        }
+
+        .p-info { flex: 1; }
+        .p-brand { font-size: 12px; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+        .p-name { font-size: 17px; font-weight: 700; margin: 2px 0; color: var(--primary); }
+        .p-price { font-size: 20px; font-weight: 800; margin-top: 5px; }
+
+        /* FOOTER DE PEDIDO (STIKY) */
+        .order-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            padding: 20px;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
+            z-index: 100;
+            display: none;
+        }
+
+        .btn-wa {
+            background: var(--success);
+            color: white;
+            width: 100%;
+            height: 55px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 16px;
+            gap: 10px;
+        }
+
+        /* PANEL ADMIN */
+        .admin-modal {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 200;
+            padding: 30px;
+            display: none;
+            overflow-y: auto;
+        }
+
+        .hidden { display: none; }
+
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brandTag">PETPOINT</div>
-      <div class="rowBtns">
-        <a id="instagramTop" class="btn soft hidden" target="_blank" rel="noreferrer">Instagram</a>
-        <a id="consultTop" class="btn wa" target="_blank" rel="noreferrer">Consulta por WhatsApp</a>
-        <button id="openAdmin" class="btn">Panel interno</button>
-      </div>
+
+<div class="container" id="app">
+    <header class="hero">
+        <div class="hero-content">
+            <h1>PETPOINT</h1>
+            <p id="promo-text">Miércoles, viernes y sábado envío gratis en Necochea</p>
+        </div>
+        <button onclick="openAdmin()" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; border-radius:50%; width:40px; height:40px; color:white; cursor:pointer;">⚙️</button>
+    </header>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="¿Qué marca buscás hoy?" oninput="filterProducts()">
     </div>
 
-    <section class="hero">
-      <div class="heroLeft">
-        <div class="badges">
-          <span class="badge dark">PETPOINT</span>
-          <span class="badge">Catálogo online</span>
-          <span class="badge">Pedido por WhatsApp</span>
-        </div>
-        <h1>Elegí el alimento y pedilo sin moverte.</h1>
-        <div class="muted">Pensado para celular, fácil de usar y con botones grandes para que cualquier persona pueda pedir rápido.</div>
-        <div class="miniCards">
-          <div class="mini">Compra simple<strong>En pocos toques</strong></div>
-          <div class="mini">Formato flexible<strong>Bolsa o fraccionado</strong></div>
-          <div class="mini">Entrega clara<strong id="miniDeliveryText">Miércoles, viernes y sábado envío gratis</strong></div>
-        </div>
-      </div>
-      <div class="heroRight">
-        <div class="heroImage heroDog"><div class="heroLabel">Perros felices, pedido simple</div></div>
-        <div class="heroImage heroCat"><div class="heroLabel">Gatos cómodos, recompra rápida</div></div>
-      </div>
-    </section>
-
-    <section class="layout">
-      <div>
-        <div class="card pad">
-          <div class="sectionTitle">Catálogo PETPOINT</div>
-          <div class="sub">Buscá, filtrá y elegí producto. Si ya compraste antes, vamos a recordarte algunos datos en este mismo dispositivo.</div>
-          <div class="toolbar" style="margin-top:14px">
-            <input id="search" class="input" placeholder="Buscar marca o producto" />
-            <select id="species" class="select"><option>Todos</option><option>Perros</option><option>Gatos</option></select>
-            <select id="brand" class="select"></select>
-          </div>
-          <div class="toggle">
-            <div>
-              <div style="font-weight:800">Repetir compra</div>
-              <div class="helper">Si ya compraste, podés volver a cargar tu último pedido con un botón.</div>
-            </div>
-            <button id="repeatOrderBtn" class="btn soft hidden">Repetir última compra</button>
-          </div>
-        </div>
-        <div id="products" class="products"></div>
-      </div>
-
-      <div class="sticky">
-        <div class="card pad">
-          <div class="sectionTitle">Tu pedido</div>
-          <div class="sub">Elegí bolsa completa o fraccionado. Al final podés pedir o consultar por WhatsApp.</div>
-
-          <div class="selbox" style="margin-top:14px">
-            <small>Producto seleccionado</small>
-            <div id="selBrand" style="font-size:24px;font-weight:900;margin-top:4px"></div>
-            <div id="selName" style="color:#cbd5e1;margin-top:4px"></div>
-            <div class="pricing">
-              <div><small>Bolsa</small><strong id="heroBag"></strong></div>
-              <div><small>Por kg</small><strong id="heroKg"></strong></div>
-            </div>
-          </div>
-
-          <div class="toggle">
-            <div>
-              <div style="font-weight:800">Compra fraccionada</div>
-              <div class="helper">Desde 1 kg cuando el producto lo permite.</div>
-            </div>
-            <div class="switchWrap">
-              <label class="switch"><input id="fractionMode" type="checkbox" checked /><span class="slider"></span></label>
-            </div>
-          </div>
-
-          <div id="fractionBox" class="lineBox">
-            <div class="lineRow"><span>Kilos</span><strong id="kgLabel"></strong></div>
-            <input id="fractionKg" type="range" min="1" max="5" value="2" style="width:100%;margin-top:10px" />
-            <div class="chips">
-              <button class="chip kg-btn" data-kg="1">1 kg</button>
-              <button class="chip kg-btn active" data-kg="2">2 kg</button>
-              <button class="chip kg-btn" data-kg="3">3 kg</button>
-              <button class="chip kg-btn" data-kg="5">5 kg</button>
-            </div>
-            <div class="lineRow" style="margin-top:12px"><span>Precio por kg</span><strong id="pricePerKg"></strong></div>
-            <div class="lineRow"><span>Total</span><strong id="fractionTotal"></strong></div>
-          </div>
-
-          <div id="bagBox" class="lineBox hidden">
-            <div class="lineRow"><span>Presentación</span><strong id="bagPresentation"></strong></div>
-            <div class="lineRow"><span>Total</span><strong id="bagTotal"></strong></div>
-          </div>
-
-          <div class="lineBox">
-            <div style="font-weight:800;margin-bottom:8px">Datos del cliente</div>
-            <div class="inline2">
-              <input id="custName" class="input" placeholder="Nombre" />
-              <input id="custPhone" class="input" placeholder="WhatsApp" />
-            </div>
-            <div class="inline2" style="margin-top:10px">
-              <select id="zoneSelect" class="select"></select>
-              <input id="custAddress" class="input" placeholder="Dirección" />
-            </div>
-            <div class="helper" style="margin-top:8px">Si volvés a entrar desde este mismo celular, estos datos pueden quedar recordados.</div>
-          </div>
-
-          <div class="lineBox" style="background:#111827;color:#fff">
-            <div style="font-size:20px;font-weight:900" id="deliveryBanner">Miércoles, viernes y sábado envío gratis</div>
-            <div id="shippingText" style="margin-top:6px;color:#cbd5e1"></div>
-          </div>
-
-          <div class="lineBox">
-            <div style="font-weight:800;margin-bottom:8px">Mensaje listo para enviar</div>
-            <div id="messageBox" class="message"></div>
-          </div>
-
-          <div class="rowBtns" style="margin-top:14px">
-            <a id="waOrderBtn" class="btn wa" target="_blank" rel="noreferrer" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center">Pedir por WhatsApp</a>
-            <a id="waConsultBtn" class="btn" target="_blank" rel="noreferrer" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center">Consulta por WhatsApp</a>
-          </div>
-          <a id="mpBtn" class="btn soft hidden" target="_blank" rel="noreferrer" style="width:100%;margin-top:12px;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center">Pagar por Mercado Pago</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="adminSection" class="adminWrap hidden">
-      <div class="card pad">
-        <div class="adminHead">
-          <div>
-            <div class="sectionTitle">Panel interno PETPOINT</div>
-            <div class="sub">Todo queda guardado en este navegador con localStorage. Para algo realmente multiusuario o seguro, después conviene pasar a backend.</div>
-          </div>
-          <div class="rowBtns">
-            <button id="exportBackup" class="btn">Exportar backup</button>
-            <button id="logoutAdmin" class="btn warn">Cerrar panel</button>
-          </div>
-        </div>
-        <div class="tabs" style="margin-top:14px">
-          <button class="tab active" data-tab="general">General</button>
-          <button class="tab" data-tab="pricing">Precios</button>
-          <button class="tab" data-tab="products">Productos</button>
-          <button class="tab" data-tab="zones">Zonas y horarios</button>
-          <button class="tab" data-tab="import">Importar / backup</button>
-          <button class="tab" data-tab="future">API futura</button>
-        </div>
-
-        <div id="tab-general" class="tabPane" style="margin-top:16px">
-          <div class="panelGrid">
-            <div class="field"><label>Nombre de marca</label><input id="cfgBrandName" class="input" /></div>
-            <div class="field"><label>Contraseña panel</label><input id="cfgAdminPassword" class="input" /></div>
-            <div class="field"><label>WhatsApp pedidos</label><input id="cfgWaOrders" class="input" /></div>
-            <div class="field"><label>WhatsApp consultas</label><input id="cfgWaConsult" class="input" /></div>
-            <div class="field"><label>Link Mercado Pago</label><input id="cfgMpLink" class="input" /></div>
-            <div class="field"><label>Instagram</label><input id="cfgInstagram" class="input" /></div>
-            <div class="field"><label>Texto envío gratis</label><input id="cfgFreeText" class="input" /></div>
-            <div class="field"><label>Monto base envío fuera de días gratis</label><input id="cfgShippingDefault" class="input" type="number" /></div>
-          </div>
-          <div class="rowBtns" style="margin-top:14px"><button id="saveGeneral" class="btn primary">Guardar cambios generales</button></div>
-        </div>
-
-        <div id="tab-pricing" class="tabPane hidden" style="margin-top:16px">
-          <div class="panelGrid3">
-            <div class="field"><label>Margen general bolsas (%)</label><input id="cfgMarginBag" class="input" type="number" step="0.1" /></div>
-            <div class="field"><label>Margen fraccionado (%)</label><input id="cfgMarginFraction" class="input" type="number" step="0.1" /></div>
-            <div class="field"><label>Redondeo</label><input id="cfgRoundTo" class="input" type="number" step="50" /></div>
-          </div>
-          <div class="card pad" style="margin-top:14px;background:#f8fafc">
-            <div class="sectionTitle" style="font-size:18px">Ajuste masivo</div>
-            <div class="sub">Podés sumar o restar porcentaje a toda una lista, a una marca o a todos los productos.</div>
-            <div class="inline3" style="margin-top:12px">
-              <div class="field"><label>Aplicar sobre</label><select id="bulkTarget" class="select"><option value="all">Todos</option><option value="source">Lista / origen</option><option value="brand">Marca</option></select></div>
-              <div class="field"><label>Valor objetivo</label><select id="bulkValue" class="select"></select></div>
-              <div class="field"><label>Variación %</label><input id="bulkPercent" class="input" type="number" step="0.1" placeholder="Ej: 10 o -5" /></div>
-            </div>
-            <div class="rowBtns" style="margin-top:12px"><button id="applyBulkCost" class="btn primary">Aplicar sobre costo base</button><button id="applyBulkMarginBag" class="btn">Aplicar margen individual bolsas</button><button id="applyBulkMarginFraction" class="btn">Aplicar margen individual fraccionado</button></div>
-          </div>
-          <div class="rowBtns" style="margin-top:14px"><button id="savePricing" class="btn primary">Guardar configuración de precios</button></div>
-        </div>
-
-        <div id="tab-products" class="tabPane hidden" style="margin-top:16px">
-          <div class="rowBtns" style="margin-bottom:12px"><button id="addProduct" class="btn primary">Agregar producto</button></div>
-          <div class="tableWrap">
-            <table class="table" id="productsTable"></table>
-          </div>
-        </div>
-
-        <div id="tab-zones" class="tabPane hidden" style="margin-top:16px">
-          <div class="rowBtns" style="margin-bottom:12px"><button id="addZone" class="btn primary">Agregar zona</button></div>
-          <div id="zonesList" class="listBox"></div>
-        </div>
-
-        <div id="tab-import" class="tabPane hidden" style="margin-top:16px">
-          <div class="panelGrid">
-            <div class="card pad">
-              <div class="sectionTitle" style="font-size:18px">Importar CSV de productos</div>
-              <div class="sub">Formato esperado: source,species,brand,name,sizeKg,baseCost,fractionable,marginBag,marginFraction</div>
-              <input id="csvFile" type="file" accept=".csv" style="margin-top:12px" />
-              <div class="rowBtns" style="margin-top:12px"><button id="importCsvBtn" class="btn primary">Importar CSV</button></div>
-            </div>
-            <div class="card pad">
-              <div class="sectionTitle" style="font-size:18px">Importar backup JSON</div>
-              <div class="sub">Sirve para mover toda la configuración a otro navegador.</div>
-              <input id="jsonFile" type="file" accept=".json" style="margin-top:12px" />
-              <div class="rowBtns" style="margin-top:12px"><button id="importJsonBtn" class="btn primary">Importar JSON</button></div>
-            </div>
-          </div>
-          <div class="card pad" style="margin-top:14px;background:#f8fafc">
-            <div class="sectionTitle" style="font-size:18px">Plantilla CSV</div>
-            <textarea class="textarea" readonly>source,species,brand,name,sizeKg,baseCost,fractionable,marginBag,marginFraction
-Royal Canin,Perros,Royal Canin,Medium Adult,15,165990,false,,
-Alarcon,Perros,Old Prince,Equilibrium Adulto Medium & Large,20,64770.1,true,,
-Salice,Perros,Maintenance,Criadores Adultos,22,34107.86,true,,</textarea>
-          </div>
-        </div>
-
-        <div id="tab-future" class="tabPane hidden" style="margin-top:16px">
-          <div class="panelGrid">
-            <div class="field"><label>Mercado Pago public key</label><input id="cfgMpPublicKey" class="input" /></div>
-            <div class="field"><label>Endpoint create preference</label><input id="cfgMpPreferenceUrl" class="input" placeholder="https://tu-api.com/create-preference" /></div>
-            <div class="field"><label>Modo pago futuro</label><select id="cfgPaymentMode" class="select"><option value="link">Solo link</option><option value="api-ready">Listo para API</option></select></div>
-            <div class="field"><label>Instagram visible</label><select id="cfgShowInstagram" class="select"><option value="true">Sí</option><option value="false">No</option></select></div>
-          </div>
-          <div class="card pad" style="margin-top:14px;background:#f8fafc">
-            <div class="sectionTitle" style="font-size:18px">Nota importante</div>
-            <div class="sub">No guardes access tokens reales en una página estática publicada. Cuando pases a pago por API, lo correcto es usar un backend o función serverless y poner ahí las credenciales privadas.</div>
-          </div>
-          <div class="rowBtns" style="margin-top:14px"><button id="saveFuture" class="btn primary">Guardar configuración futura</button></div>
-        </div>
-      </div>
-    </section>
-
-    <div class="foot">PETPOINT · catálogo mobile-first con WhatsApp, recompra y panel interno</div>
-  </div>
-
-  <div id="loginModal" class="modal hidden">
-    <div class="modalCard">
-      <div class="pad">
-        <div class="sectionTitle">Ingresar al panel interno</div>
-        <div class="sub">Acceso local de este navegador.</div>
-        <input id="loginPassword" class="input" type="password" placeholder="Contraseña" style="margin-top:14px" />
-        <div class="rowBtns" style="margin-top:14px"><button id="loginSubmit" class="btn primary">Entrar</button><button id="loginCancel" class="btn">Cancelar</button></div>
-        <div id="loginError" class="helper" style="color:#b91c1c;margin-top:10px"></div>
-      </div>
+    <div class="filter-scroll">
+        <div class="chip active" onclick="setFilter('Todos', this)">Todos</div>
+        <div class="chip" onclick="setFilter('Perros', this)">Perros 🐶</div>
+        <div class="chip" onclick="setFilter('Gatos', this)">Gatos 🐱</div>
     </div>
-  </div>
 
-  <script>
-    const STORAGE_KEY='petpoint_app_state_v1';
-    const DEFAULT_STATE={
-      config:{
-        brandName:'PETPOINT', adminPassword:'petpoint2026',
-        whatsappOrders:'5492262655225', whatsappConsult:'5492262655225', instagram:'', mercadoPagoLink:'',
-        freeDeliveryText:'Miércoles, viernes y sábado envío gratis', shippingDefault:2500,
-        marginBag:10, marginFraction:18, roundTo:100,
-        mpPublicKey:'', mpPreferenceUrl:'', paymentMode:'link', showInstagram:true
-      },
-      zones:[
-        {id:1,name:'Centro Necochea',freeDays:'Miércoles y viernes',free:true,extraShipping:1800,notes:'Gratis en rutas programadas'},
-        {id:2,name:'Quequén',freeDays:'Viernes y sábado',free:true,extraShipping:2500,notes:'Gratis en días asignados'},
-        {id:3,name:'Villa Díaz Vélez',freeDays:'Miércoles y sábado',free:true,extraShipping:2200,notes:'Gratis en días asignados'},
-        {id:4,name:'Otra zona',freeDays:'A coordinar',free:false,extraShipping:3000,notes:'Consultar costo según distancia'}
-      ],
-      products:[
-        {id:1,source:'Alarcon',species:'Perros',brand:'Old Prince',name:'Equilibrium Adulto Medium & Large',sizeKg:20,baseCost:64770.1,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:2,source:'Alarcon',species:'Perros',brand:'Old Prince',name:'Premium Adulto Cordero y Arroz',sizeKg:15,baseCost:62990,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:3,source:'Salice',species:'Perros',brand:'Kongo',name:'Natural Adultos Medianos y Grandes',sizeKg:21,baseCost:30267.55,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:4,source:'Salice',species:'Perros',brand:'Maintenance',name:'Criadores Adultos',sizeKg:22,baseCost:28991.68,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:5,source:'Salice',species:'Perros',brand:'Voraz',name:'Adulto Carne',sizeKg:20,baseCost:20349.04,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:6,source:'Alarcon',species:'Perros',brand:'Fawna',name:'Adulto Mordida Mediana y Grande',sizeKg:15,baseCost:79424.63,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:7,source:'Royal Canin',species:'Perros',brand:'Royal Canin',name:'Medium Adult',sizeKg:15,baseCost:155229.91,fractionable:false,marginBag:null,marginFraction:null,active:true},
-        {id:8,source:'Eukanuba',species:'Perros',brand:'Eukanuba',name:'Adult Medium Breed',sizeKg:15,baseCost:101411.59,fractionable:false,marginBag:null,marginFraction:null,active:true},
-        {id:9,source:'Alarcon',species:'Gatos',brand:'Old Prince',name:'Cats Complete Care',sizeKg:7.5,baseCost:51921.26,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:10,source:'Alarcon',species:'Gatos',brand:'Old Prince',name:'Cats Indoor',sizeKg:7.5,baseCost:57113.37,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:11,source:'Salice',species:'Gatos',brand:'Kongo',name:'Adulto Natural Carne y Pollo',sizeKg:8,baseCost:21839.09,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:12,source:'Royal Canin',species:'Gatos',brand:'Royal Canin',name:'Kitten',sizeKg:1.5,baseCost:37553.16,fractionable:false,marginBag:null,marginFraction:null,active:true}
-      ],
-      ui:{adminUnlocked:false,activeTab:'general'},
-      customer:{name:'',phone:'',address:'',zoneId:1},
-      lastOrder:null
+    <div class="product-grid" id="productGrid">
+        </div>
+
+    <div class="order-bar" id="orderBar">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px">
+            <div>
+                <span id="selectedName" style="font-weight:700; display:block">Producto</span>
+                <span id="selectedDetail" style="font-size:12px; color:var(--text-muted)">Presentación</span>
+            </div>
+            <div id="selectedPrice" style="font-size:22px; font-weight:800"></div>
+        </div>
+        <a href="#" id="waLink" class="btn-wa">
+            Pedir por WhatsApp
+        </a>
+    </div>
+</div>
+
+<div id="adminPanel" class="admin-modal">
+    <div style="display:flex; justify-content:space-between; align-items:center">
+        <h2>Panel Interno</h2>
+        <button onclick="closeAdmin()">Cerrar</button>
+    </div>
+    <hr>
+    <div id="adminContent">
+        <p>Ingresá la clave para editar:</p>
+        <input type="password" id="adminPass" placeholder="Clave">
+        <button onclick="checkPass()">Entrar</button>
+    </div>
+</div>
+
+<script>
+    // --- DATOS DE LA EMPRESA (Configurables) ---
+    let state = {
+        config: {
+            whatsapp: "5492262655225",
+            promo: "Miércoles, viernes y sábado envío gratis en Necochea",
+            roundTo: 100
+        },
+        products: [
+            { id: 1, species: "Perros", brand: "Old Prince", name: "Equilibrium Adulto", price: 64700, img: "https://images.unsplash.com/photo-1589924691995-ad0029ecbb68?auto=format&fit=crop&q=60&w=400" },
+            { id: 2, species: "Perros", brand: "Kongo", name: "Natural Adulto", price: 30200, img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=60&w=400" },
+            { id: 3, species: "Gatos", brand: "Royal Canin", name: "Kitten Gato", price: 37500, img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=60&w=400" },
+            { id: 4, species: "Perros", brand: "Royal Canin", name: "Medium Adult", price: 155200, img: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=60&w=400" }
+        ]
     };
 
-    function loadState(){
-      try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return structuredClone(DEFAULT_STATE);const parsed=JSON.parse(raw);return mergeState(structuredClone(DEFAULT_STATE),parsed)}catch(e){return structuredClone(DEFAULT_STATE)}
-    }
-    function mergeState(base, custom){
-      if(!custom||typeof custom!=='object') return base;
-      for(const k in custom){
-        if(Array.isArray(custom[k])) base[k]=custom[k];
-        else if(custom[k]&&typeof custom[k]==='object'&&base[k]&&typeof base[k]==='object') base[k]=mergeState(base[k],custom[k]);
-        else base[k]=custom[k];
-      }
-      return base;
-    }
-    function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
-    function money(v){return new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(Number(v||0));}
-    function roundStep(value, step){return Math.round(Number(value||0)/Number(step||1))*Number(step||1)}
-    function nextId(arr){return arr.length?Math.max(...arr.map(x=>Number(x.id)||0))+1:1}
+    let currentFilter = 'Todos';
 
-    const state=loadState();
-    const $=id=>document.getElementById(id);
+    function render() {
+        const grid = $('productGrid');
+        const query = $('searchInput').value.toLowerCase();
+        
+        const filtered = state.products.filter(p => {
+            const matchesSearch = p.brand.toLowerCase().includes(query) || p.name.toLowerCase().includes(query);
+            const matchesFilter = currentFilter === 'Todos' || p.species === currentFilter;
+            return matchesSearch && matchesFilter;
+        });
 
-    const ui={species:'Todos',brand:'Todas',search:'',selectedId:null,fractionMode:true,fractionKg:2};
-    if(!state.products.find(p=>p.id===ui.selectedId&&p.active)) ui.selectedId=(state.products.find(p=>p.active)||state.products[0]).id;
-
-    function activeProducts(){return state.products.filter(p=>p.active!==false)}
-    function currentBrands(){return ['Todas',...new Set(activeProducts().map(p=>p.brand))]}
-    function currentSources(){return ['Todos',...new Set(state.products.map(p=>p.source||'Sin origen'))]}
-    function filteredProducts(){
-      return activeProducts().filter(p=>{
-        const a=ui.species==='Todos'||p.species===ui.species;
-        const b=ui.brand==='Todas'||p.brand===ui.brand;
-        const q=ui.search.trim().toLowerCase();
-        const t=`${p.brand} ${p.name} ${p.species} ${p.source}`.toLowerCase();
-        return a&&b&&(!q||t.includes(q));
-      });
-    }
-    function selectedProduct(){return filteredProducts().find(p=>p.id===ui.selectedId)||filteredProducts()[0]||activeProducts()[0]}
-    function effectiveMargins(p){
-      const bag=(p.marginBag===null||p.marginBag===undefined||p.marginBag==='')?Number(state.config.marginBag):Number(p.marginBag);
-      const fraction=(p.marginFraction===null||p.marginFraction===undefined||p.marginFraction==='')?Number(state.config.marginFraction):Number(p.marginFraction);
-      return {bag,fraction};
-    }
-    function priceInfo(p){
-      const m=effectiveMargins(p);
-      const bag=roundStep(Number(p.baseCost)*(1+m.bag/100), Number(state.config.roundTo));
-      const kilo=roundStep((Number(p.baseCost)/Number(p.sizeKg))*(1+m.fraction/100), Number(state.config.roundTo));
-      const max=Math.max(1,Math.floor(Number(p.sizeKg)||1));
-      const kg=Math.min(Math.max(Number(ui.fractionKg)||1,1),max);
-      return {bag,kilo,kg,total:kilo*kg,max,bagMargin:m.bag,fractionMargin:m.fraction};
-    }
-    function selectedZone(){return state.zones.find(z=>Number(z.id)===Number(state.customer.zoneId))||state.zones[0]}
-    function freeDeliveryForZone(zone){return zone&&zone.free===true}
-    function shippingAmount(zone){return Number(zone&&zone.extraShipping!=null?zone.extraShipping:state.config.shippingDefault)||0}
-    function orderMessage(){
-      const p=selectedProduct(); const px=priceInfo(p); const zone=selectedZone();
-      const cust=state.customer;
-      const common=`Hola ${state.config.brandName}, quiero hacer este pedido:\n• Cliente: ${cust.name||'-'}\n• Zona: ${zone?zone.name:'-'}\n• Dirección: ${cust.address||'-'}\n• Teléfono: ${cust.phone||'-'}`;
-      const shippingLine = freeDeliveryForZone(zone)
-        ? `\n• Beneficio: ${state.config.freeDeliveryText}`
-        : `\n• Envío estimado fuera de ruta gratis: ${money(shippingAmount(zone))}`;
-      if(ui.fractionMode&&p.fractionable){
-        return `${common}\n• Producto: ${p.brand} - ${p.name}\n• Cantidad: ${px.kg} kg fraccionado\n• Precio estimado: ${money(px.total)}${shippingLine}`;
-      }
-      return `${common}\n• Producto: ${p.brand} - ${p.name}\n• Presentación: bolsa de ${p.sizeKg} kg\n• Precio estimado: ${money(px.bag)}${shippingLine}`;
+        grid.innerHTML = filtered.map(p => `
+            <div class="p-card" onclick="selectProduct(${p.id})">
+                <img src="${p.img}" class="p-img">
+                <div class="p-info">
+                    <span class="p-brand">${p.brand}</span>
+                    <h3 class="p-name">${p.name}</h3>
+                    <div class="p-price">$${p.price.toLocaleString('es-AR')}</div>
+                </div>
+            </div>
+        `).join('');
     }
 
-    function syncTopLinks(){
-      document.title=`${state.config.brandName} | Catálogo + Panel`;
-      $('miniDeliveryText').textContent=state.config.freeDeliveryText;
-      const consultLink=`https://wa.me/${state.config.whatsappConsult}?text=${encodeURIComponent('Hola, quiero hacer una consulta sobre los productos de '+state.config.brandName)}`;
-      $('consultTop').href=consultLink; $('waConsultBtn').href=consultLink;
-      const ig=String(state.config.instagram||'').trim();
-      $('instagramTop').classList.toggle('hidden',!ig);
-      if(ig) $('instagramTop').href=ig;
-      const mp=String(state.config.mercadoPagoLink||'').trim();
-      $('mpBtn').classList.toggle('hidden',!mp);
-      if(mp) $('mpBtn').href=mp;
-      const zone=selectedZone();
-      $('deliveryBanner').textContent=state.config.freeDeliveryText;
-      $('shippingText').textContent=zone ? `${zone.name}: ${zone.freeDays}${zone.notes?` · ${zone.notes}`:''}${freeDeliveryForZone(zone)?'':' · Envío estimado '+money(shippingAmount(zone))}` : '';
+    function selectProduct(id) {
+        const p = state.products.find(x => x.id === id);
+        $('selectedName').innerText = p.name;
+        $('selectedDetail').innerText = p.brand + " | " + p.species;
+        $('selectedPrice').innerText = "$" + p.price.toLocaleString('es-AR');
+        
+        const msg = encodeURIComponent(`Hola PetPoint! Quiero encargar:\n- ${p.brand} ${p.name}\n- Precio: $${p.price.toLocaleString('es-AR')}\n\n¿Me confirman disponibilidad?`);
+        $('waLink').href = `https://wa.me/${state.config.whatsapp}?text=${msg}`;
+        
+        $('orderBar').style.display = 'block';
     }
 
-    function renderBrandSelect(){
-      const brands=currentBrands();
-      $('brand').innerHTML=brands.map(b=>`<option value="${b}">${b==='Todas'?'Todas las marcas':b}</option>`).join('');
-      $('brand').value=ui.brand;
-    }
-    function renderZoneSelect(){
-      $('zoneSelect').innerHTML=state.zones.map(z=>`<option value="${z.id}">${z.name}</option>`).join('');
-      $('zoneSelect').value=String(state.customer.zoneId||state.zones[0]?.id||1);
-    }
-    function renderProducts(){
-      const list=filteredProducts();
-      if(!list.find(p=>Number(p.id)===Number(ui.selectedId))&&list[0]) ui.selectedId=list[0].id;
-      $('products').innerHTML=list.map(p=>{
-        const px=priceInfo(p);
-        return `<div class="product ${Number(p.id)===Number(ui.selectedId)?'active':''}" data-id="${p.id}">
-          <div class="prodTop"><div><div class="prodBrand">${p.brand}</div><div class="prodName">${p.name}</div></div><div class="pill">${p.species}</div></div>
-          <div class="pills" style="margin-top:10px"><span class="pill">${p.sizeKg} kg</span><span class="pill">${p.source||'Sin origen'}</span>${p.fractionable?'<span class="pill">1 kg+</span>':''}</div>
-          <div class="prodPrice">${money(px.bag)}</div>
-        </div>`
-      }).join('');
-      document.querySelectorAll('.product').forEach(node=>node.addEventListener('click',()=>{ui.selectedId=Number(node.dataset.id);renderPublic()}));
-    }
-    function renderPublic(){
-      renderBrandSelect(); renderZoneSelect(); syncTopLinks(); renderProducts();
-      const p=selectedProduct(); if(!p) return; const px=priceInfo(p); const zone=selectedZone();
-      if(!p.fractionable) ui.fractionMode=false;
-      $('selBrand').textContent=p.brand; $('selName').textContent=p.name; $('heroBag').textContent=money(px.bag); $('heroKg').textContent=money(px.kilo);
-      $('fractionMode').checked=ui.fractionMode; $('fractionMode').disabled=!p.fractionable;
-      $('fractionBox').classList.toggle('hidden', !(ui.fractionMode&&p.fractionable));
-      $('bagBox').classList.toggle('hidden', ui.fractionMode&&p.fractionable);
-      $('kgLabel').textContent=`${px.kg} kg`; $('pricePerKg').textContent=money(px.kilo); $('fractionTotal').textContent=money(px.total);
-      $('bagPresentation').textContent=`Bolsa de ${p.sizeKg} kg`; $('bagTotal').textContent=money(px.bag); $('fractionKg').max=String(px.max); $('fractionKg').value=String(px.kg);
-      document.querySelectorAll('.kg-btn').forEach(btn=>btn.classList.toggle('active', Number(btn.dataset.kg)===px.kg));
-      const msg=orderMessage(); $('messageBox').textContent=msg;
-      $('waOrderBtn').href=`https://wa.me/${state.config.whatsappOrders}?text=${encodeURIComponent(msg)}`;
-      $('custName').value=state.customer.name||''; $('custPhone').value=state.customer.phone||''; $('custAddress').value=state.customer.address||'';
-      $('repeatOrderBtn').classList.toggle('hidden', !state.lastOrder);
+    function setFilter(val, el) {
+        currentFilter = val;
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        render();
     }
 
-    function persistCustomerAndLastOrder(){
-      const p=selectedProduct(); const px=priceInfo(p);
-      state.lastOrder={productId:p.id,fractionMode:ui.fractionMode&&p.fractionable,fractionKg:px.kg,zoneId:state.customer.zoneId,customer:{...state.customer}};
-      saveState();
-    }
-    function applyLastOrder(){
-      if(!state.lastOrder) return;
-      ui.selectedId=state.lastOrder.productId; ui.fractionMode=!!state.lastOrder.fractionMode; ui.fractionKg=Number(state.lastOrder.fractionKg)||2;
-      state.customer={...state.customer,...(state.lastOrder.customer||{}),zoneId:state.lastOrder.zoneId||state.customer.zoneId};
-      saveState(); renderPublic();
+    function filterProducts() { render(); }
+
+    function openAdmin() { $('adminPanel').style.display = 'block'; }
+    function closeAdmin() { $('adminPanel').style.display = 'none'; }
+    
+    function checkPass() {
+        if($('adminPass').value === '0007') {
+            $('adminContent').innerHTML = `
+                <h3>Configuración</h3>
+                <label>WhatsApp:</label><br>
+                <input type="text" value="${state.config.whatsapp}" onchange="state.config.whatsapp = this.value"><br><br>
+                <label>Texto Promo:</label><br>
+                <input type="text" value="${state.config.promo}" onchange="state.config.promo = this.value; document.getElementById('promo-text').innerText = this.value" style="width:100%"><br><br>
+                <p><i>Nota: Los cambios son temporales en esta demo. Se guardan en memoria.</i></p>
+            `;
+        } else {
+            alert('Clave incorrecta');
+        }
     }
 
-    function renderAdmin(){
-      $('adminSection').classList.toggle('hidden', !state.ui.adminUnlocked);
-      document.querySelectorAll('.tab').forEach(btn=>btn.classList.toggle('active', btn.dataset.tab===state.ui.activeTab));
-      document.querySelectorAll('.tabPane').forEach(p=>p.classList.add('hidden'));
-      const pane=$(`tab-${state.ui.activeTab}`); if(pane) pane.classList.remove('hidden');
-      $('cfgBrandName').value=state.config.brandName; $('cfgAdminPassword').value=state.config.adminPassword; $('cfgWaOrders').value=state.config.whatsappOrders;
-      $('cfgWaConsult').value=state.config.whatsappConsult; $('cfgMpLink').value=state.config.mercadoPagoLink; $('cfgInstagram').value=state.config.instagram;
-      $('cfgFreeText').value=state.config.freeDeliveryText; $('cfgShippingDefault').value=state.config.shippingDefault;
-      $('cfgMarginBag').value=state.config.marginBag; $('cfgMarginFraction').value=state.config.marginFraction; $('cfgRoundTo').value=state.config.roundTo;
-      $('cfgMpPublicKey').value=state.config.mpPublicKey; $('cfgMpPreferenceUrl').value=state.config.mpPreferenceUrl; $('cfgPaymentMode').value=state.config.paymentMode;
-      $('cfgShowInstagram').value=String(state.config.showInstagram);
-      renderBulkValue(); renderProductsTable(); renderZones();
-    }
-    function renderBulkValue(){
-      const target=$('bulkTarget').value||'all';
-      let opts=['Todos'];
-      if(target==='source') opts=currentSources().filter(x=>x!=='Todos');
-      if(target==='brand') opts=[...new Set(state.products.map(p=>p.brand))];
-      $('bulkValue').innerHTML=opts.map(x=>`<option value="${x}">${x}</option>`).join('');
-    }
-    function renderProductsTable(){
-      const head=`<tr><th>Activo</th><th>Origen</th><th>Especie</th><th>Marca</th><th>Producto</th><th>Kg</th><th>Costo base</th><th>Frac.</th><th>Margen bolsa</th><th>Margen frac.</th><th>Eliminar</th></tr>`;
-      const rows=state.products.map(p=>`<tr data-id="${p.id}">
-        <td><input type="checkbox" data-k="active" ${p.active!==false?'checked':''}></td>
-        <td><input data-k="source" value="${escapeAttr(p.source||'')}" /></td>
-        <td><select data-k="species"><option ${p.species==='Perros'?'selected':''}>Perros</option><option ${p.species==='Gatos'?'selected':''}>Gatos</option></select></td>
-        <td><input data-k="brand" value="${escapeAttr(p.brand||'')}" /></td>
-        <td><input data-k="name" value="${escapeAttr(p.name||'')}" /></td>
-        <td><input data-k="sizeKg" type="number" step="0.1" value="${p.sizeKg}" /></td>
-        <td><input data-k="baseCost" type="number" step="0.01" value="${p.baseCost}" /></td>
-        <td><input type="checkbox" data-k="fractionable" ${p.fractionable?'checked':''}></td>
-        <td><input data-k="marginBag" type="number" step="0.1" value="${p.marginBag==null?'':p.marginBag}" placeholder="global" /></td>
-        <td><input data-k="marginFraction" type="number" step="0.1" value="${p.marginFraction==null?'':p.marginFraction}" placeholder="global" /></td>
-        <td><button class="btn warn delRow" data-id="${p.id}">Borrar</button></td>
-      </tr>`).join('');
-      $('productsTable').innerHTML=head+rows;
-      $('productsTable').querySelectorAll('input,select').forEach(inp=>inp.addEventListener('change',onProductsTableChange));
-      $('productsTable').querySelectorAll('.delRow').forEach(btn=>btn.addEventListener('click',()=>{state.products=state.products.filter(p=>Number(p.id)!==Number(btn.dataset.id));saveState();renderAdmin();renderPublic()}));
-    }
-    function escapeAttr(str){return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
-    function onProductsTableChange(e){
-      const tr=e.target.closest('tr'); const id=Number(tr.dataset.id); const p=state.products.find(x=>Number(x.id)===id); if(!p) return;
-      const key=e.target.dataset.k; if(!key) return;
-      if(e.target.type==='checkbox') p[key]=e.target.checked;
-      else if(['sizeKg','baseCost','marginBag','marginFraction'].includes(key)) p[key]=e.target.value===''?null:Number(e.target.value);
-      else p[key]=e.target.value;
-      saveState(); renderPublic();
-    }
-    function renderZones(){
-      $('zonesList').innerHTML=state.zones.map(z=>`<div class="zoneCard" data-id="${z.id}">
-        <div class="inline3">
-          <div class="field"><label>Zona</label><input class="input zoneInput" data-k="name" value="${escapeAttr(z.name)}"></div>
-          <div class="field"><label>Días / horario</label><input class="input zoneInput" data-k="freeDays" value="${escapeAttr(z.freeDays)}"></div>
-          <div class="field"><label>Costo envío fuera de gratis</label><input class="input zoneInput" data-k="extraShipping" type="number" value="${z.extraShipping}"></div>
-        </div>
-        <div class="inline2" style="margin-top:10px">
-          <div class="field"><label>Nota visible</label><input class="input zoneInput" data-k="notes" value="${escapeAttr(z.notes||'')}"></div>
-          <div class="field"><label>Ruta gratis</label><select class="select zoneInput" data-k="free"><option value="true" ${z.free?'selected':''}>Sí</option><option value="false" ${!z.free?'selected':''}>No</option></select></div>
-        </div>
-        <div class="rowBtns" style="margin-top:10px"><button class="btn warn delZone" data-id="${z.id}">Borrar zona</button></div>
-      </div>`).join('');
-      document.querySelectorAll('.zoneInput').forEach(inp=>inp.addEventListener('change',onZoneChange));
-      document.querySelectorAll('.delZone').forEach(btn=>btn.addEventListener('click',()=>{state.zones=state.zones.filter(z=>Number(z.id)!==Number(btn.dataset.id));if(!state.zones.find(z=>Number(z.id)===Number(state.customer.zoneId))&&state.zones[0])state.customer.zoneId=state.zones[0].id;saveState();renderAdmin();renderPublic()}));
-    }
-    function onZoneChange(e){
-      const card=e.target.closest('.zoneCard'); const z=state.zones.find(x=>Number(x.id)===Number(card.dataset.id)); if(!z) return;
-      const key=e.target.dataset.k; if(key==='extraShipping') z[key]=Number(e.target.value); else if(key==='free') z[key]=e.target.value==='true'; else z[key]=e.target.value;
-      saveState(); renderPublic();
-    }
+    const $ = id => document.getElementById(id);
 
-    function saveGeneral(){
-      state.config.brandName=$('cfgBrandName').value.trim()||'PETPOINT'; state.config.adminPassword=$('cfgAdminPassword').value.trim()||'petpoint2026';
-      state.config.whatsappOrders=$('cfgWaOrders').value.trim(); state.config.whatsappConsult=$('cfgWaConsult').value.trim(); state.config.mercadoPagoLink=$('cfgMpLink').value.trim();
-      state.config.instagram=$('cfgInstagram').value.trim(); state.config.freeDeliveryText=$('cfgFreeText').value.trim(); state.config.shippingDefault=Number($('cfgShippingDefault').value)||0;
-      saveState(); syncTopLinks(); renderPublic(); alert('Configuración general guardada');
-    }
-    function savePricing(){
-      state.config.marginBag=Number($('cfgMarginBag').value)||0; state.config.marginFraction=Number($('cfgMarginFraction').value)||0; state.config.roundTo=Number($('cfgRoundTo').value)||100;
-      saveState(); renderPublic(); alert('Configuración de precios guardada');
-    }
-    function saveFuture(){
-      state.config.mpPublicKey=$('cfgMpPublicKey').value.trim(); state.config.mpPreferenceUrl=$('cfgMpPreferenceUrl').value.trim(); state.config.paymentMode=$('cfgPaymentMode').value;
-      state.config.showInstagram=$('cfgShowInstagram').value==='true'; saveState(); syncTopLinks(); alert('Configuración futura guardada');
-    }
-    function addProduct(){
-      state.products.unshift({id:nextId(state.products),source:'Manual',species:'Perros',brand:'Nueva marca',name:'Nuevo producto',sizeKg:15,baseCost:0,fractionable:true,marginBag:null,marginFraction:null,active:true});
-      saveState(); renderAdmin(); renderPublic();
-    }
-    function addZone(){state.zones.push({id:nextId(state.zones),name:'Nueva zona',freeDays:'A definir',free:false,extraShipping:state.config.shippingDefault,notes:''}); saveState(); renderAdmin(); renderPublic();}
-    function applyBulk(action){
-      const target=$('bulkTarget').value; const value=$('bulkValue').value; const pct=Number($('bulkPercent').value||0); if(isNaN(pct)) return alert('Cargá un porcentaje válido');
-      state.products.forEach(p=>{
-        let match=false; if(target==='all') match=true; if(target==='source') match=(p.source||'')===value; if(target==='brand') match=(p.brand||'')===value;
-        if(!match) return;
-        if(action==='cost') p.baseCost=Number((Number(p.baseCost||0)*(1+pct/100)).toFixed(2));
-        if(action==='bag'){ const current=(p.marginBag==null?Number(state.config.marginBag):Number(p.marginBag)); p.marginBag=Number((current+pct).toFixed(2)); }
-        if(action==='fraction'){ const current=(p.marginFraction==null?Number(state.config.marginFraction):Number(p.marginFraction)); p.marginFraction=Number((current+pct).toFixed(2)); }
-      });
-      saveState(); renderAdmin(); renderPublic(); alert('Ajuste aplicado');
-    }
+    // Inicio
+    render();
+</script>
 
-    function exportBackup(){
-      const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='petpoint-backup.json'; a.click(); URL.revokeObjectURL(url);
-    }
-    function importJson(file){
-      const reader=new FileReader(); reader.onload=()=>{try{const data=JSON.parse(reader.result); const merged=mergeState(structuredClone(DEFAULT_STATE),data); Object.assign(state, merged); saveState(); renderAdmin(); renderPublic(); alert('Backup importado')}catch(e){alert('No se pudo importar el JSON')}}; reader.readAsText(file);
-    }
-    function parseCSV(text){
-      const lines=text.trim().split(/\r?\n/); if(lines.length<2) return []; const header=lines[0].split(',').map(x=>x.trim());
-      return lines.slice(1).filter(Boolean).map(line=>{
-        const cols=[]; let cur='',q=false; for(let i=0;i<line.length;i++){const ch=line[i]; if(ch==='"') q=!q; else if(ch===','&&!q){cols.push(cur); cur='';} else cur+=ch;} cols.push(cur);
-        const obj={}; header.forEach((h,i)=>obj[h]=String(cols[i]||'').trim().replace(/^"|"$/g,'')); return obj;
-      });
-    }
-    function importCsv(file){
-      const reader=new FileReader(); reader.onload=()=>{try{const rows=parseCSV(reader.result); const mapped=rows.map(r=>({id:nextId(state.products)+(Math.random()*100000|0),source:r.source||'Importado',species:r.species||'Perros',brand:r.brand||'Marca',name:r.name||'Producto',sizeKg:Number(r.sizeKg||0),baseCost:Number(r.baseCost||0),fractionable:String(r.fractionable||'true').toLowerCase()!=='false',marginBag:r.marginBag===''||r.marginBag==null?null:Number(r.marginBag),marginFraction:r.marginFraction===''||r.marginFraction==null?null:Number(r.marginFraction),active:true}));
-          state.products = mapped; saveState(); renderAdmin(); renderPublic(); alert('CSV importado y productos reemplazados');
-        }catch(e){alert('No se pudo importar el CSV')}}; reader.readAsText(file);
-    }
-
-    function bindPublicEvents(){
-      $('search').addEventListener('input',e=>{ui.search=e.target.value; renderPublic()});
-      $('species').addEventListener('change',e=>{ui.species=e.target.value; renderPublic()});
-      $('brand').addEventListener('change',e=>{ui.brand=e.target.value; renderPublic()});
-      $('fractionMode').addEventListener('change',e=>{ui.fractionMode=e.target.checked; renderPublic()});
-      $('fractionKg').addEventListener('input',e=>{ui.fractionKg=Number(e.target.value); renderPublic()});
-      document.querySelectorAll('.kg-btn').forEach(btn=>btn.addEventListener('click',()=>{ui.fractionKg=Number(btn.dataset.kg); renderPublic()}));
-      $('custName').addEventListener('input',e=>{state.customer.name=e.target.value; saveState();});
-      $('custPhone').addEventListener('input',e=>{state.customer.phone=e.target.value; saveState();});
-      $('custAddress').addEventListener('input',e=>{state.customer.address=e.target.value; saveState();});
-      $('zoneSelect').addEventListener('change',e=>{state.customer.zoneId=Number(e.target.value); saveState(); renderPublic()});
-      $('waOrderBtn').addEventListener('click',persistCustomerAndLastOrder); $('repeatOrderBtn').addEventListener('click',applyLastOrder);
-    }
-    function bindAdminEvents(){
-      $('openAdmin').addEventListener('click',()=>{$('loginModal').classList.remove('hidden'); $('loginPassword').value=''; $('loginError').textContent='';});
-      $('loginCancel').addEventListener('click',()=>$('loginModal').classList.add('hidden'));
-      $('loginSubmit').addEventListener('click',()=>{if($('loginPassword').value===state.config.adminPassword){state.ui.adminUnlocked=true; $('loginModal').classList.add('hidden'); saveState(); renderAdmin();} else {$('loginError').textContent='Contraseña incorrecta';}});
-      $('logoutAdmin').addEventListener('click',()=>{state.ui.adminUnlocked=false; saveState(); renderAdmin();});
-      document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{state.ui.activeTab=btn.dataset.tab; saveState(); renderAdmin();}));
-      $('saveGeneral').addEventListener('click',saveGeneral); $('savePricing').addEventListener('click',savePricing); $('saveFuture').addEventListener('click',saveFuture);
-      $('addProduct').addEventListener('click',addProduct); $('addZone').addEventListener('click',addZone); $('bulkTarget').addEventListener('change',renderBulkValue);
-      $('applyBulkCost').addEventListener('click',()=>applyBulk('cost')); $('applyBulkMarginBag').addEventListener('click',()=>applyBulk('bag')); $('applyBulkMarginFraction').addEventListener('click',()=>applyBulk('fraction'));
-      $('exportBackup').addEventListener('click',exportBackup);
-      $('importJsonBtn').addEventListener('click',()=>{const f=$('jsonFile').files[0]; if(f) importJson(f); else alert('Elegí un JSON')});
-      $('importCsvBtn').addEventListener('click',()=>{const f=$('csvFile').files[0]; if(f) importCsv(f); else alert('Elegí un CSV')});
-    }
-
-    renderBrandSelect(); renderZoneSelect(); bindPublicEvents(); bindAdminEvents(); renderPublic(); renderAdmin();
-  </script>
 </body>
 </html>
 
