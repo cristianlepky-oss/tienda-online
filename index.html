@@ -3,25 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PETPOINT | Catálogo + Panel</title>
+  <title>PETPOINT | Tienda online</title>
   <style>
-    :root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--brand:#111827;--soft:#f3f4f6;--soft2:#eef2ff;--wa:#25d366;--wa2:#1da851;--shadow:0 12px 28px rgba(15,23,42,.06)}
+    :root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--brand:#111827;--soft:#f3f4f6;--wa:#25d366;--wa2:#1da851;--shadow:0 12px 28px rgba(15,23,42,.06)}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#f8fafc,#f3f4f6);color:var(--text)}
     .wrap{max-width:1240px;margin:0 auto;padding:16px}.hidden{display:none!important}img{max-width:100%;display:block}
     .btn,.tab,.chip{border:1px solid var(--line);background:#fff;color:var(--text);cursor:pointer;transition:.15s;font:inherit}.btn{height:48px;padding:0 18px;border-radius:16px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}.btn:hover,.tab:hover,.chip:hover{transform:translateY(-1px);box-shadow:var(--shadow)}.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}.btn.soft{background:var(--soft)}.btn.wa{background:var(--wa);border-color:var(--wa);color:#fff}.btn.wa:hover{background:var(--wa2)}.btn.warn{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.brandTag{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#111827;color:#fff;font-weight:800;letter-spacing:.02em}.rowBtns,.badges,.pills{display:flex;flex-wrap:wrap;gap:8px}.badge,.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px;text-decoration:none;color:inherit}.badge.dark{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:800}
-    .hero{display:grid;grid-template-columns:1.15fr .85fr;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:var(--shadow)}.heroLeft{padding:30px}.heroRight{border-left:1px solid var(--line);display:grid;grid-template-rows:1fr 1fr}.heroImage{position:relative;min-height:240px;background-size:cover;background-position:center}.heroImage::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,24,39,.08),rgba(17,24,39,.35))}.heroDog{background-image:url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1400&q=80')}.heroCat{background-image:url('https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=1400&q=80')}.heroLabel{position:absolute;left:16px;bottom:16px;z-index:1;padding:10px 14px;border-radius:16px;background:rgba(255,255,255,.92);font-weight:700}
-    h1{font-size:48px;line-height:1.02;letter-spacing:-.04em;margin:14px 0}.muted{color:var(--muted)}.miniCards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.mini{padding:14px;border:1px solid var(--line);background:#fff;border-radius:18px}.mini strong{display:block;margin-top:4px}
-    .layout{display:grid;grid-template-columns:1fr 390px;gap:16px;margin-top:16px}.card{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow)}.pad{padding:20px}.sectionTitle{font-size:22px;font-weight:900;margin:0 0 6px}.sub{font-size:14px;color:var(--muted)}
-    .toolbar{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:10px}.input,.select,.textarea{width:100%;height:50px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:0 14px;font-size:15px}.textarea{height:110px;padding:12px 14px;resize:vertical}.toggle{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:10px}
+    .hero{display:grid;grid-template-columns:1.08fr .92fr;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:var(--shadow)}.heroLeft,.heroRight{padding:28px}.heroRight{border-left:1px solid var(--line);background:#f8fafc}
+    h1{font-size:48px;line-height:1.02;letter-spacing:-.04em;margin:14px 0}.muted{color:var(--muted)}
+    .heroImageBox{margin-top:18px;border:1px solid var(--line);background:#fff;border-radius:24px;padding:14px}.heroImageBox img{width:100%;height:280px;object-fit:contain;object-position:center center;border-radius:18px;background:#f8fafc}.heroCaption{margin-top:10px;font-size:14px;color:var(--muted)}
+    .miniCards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.mini{padding:14px;border:1px solid var(--line);background:#fff;border-radius:18px}.mini strong{display:block;margin-top:4px}
+    .sectionTitle{font-size:22px;font-weight:900;margin:0 0 6px}.sub{font-size:14px;color:var(--muted)}
+    .quickBox{background:#111827;color:#fff;border-radius:24px;padding:18px}.quickBox small{color:#cbd5e1}.quickPricing{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.quickPricing div{background:rgba(255,255,255,.08);border-radius:16px;padding:12px}.quickPricing strong{display:block;margin-top:4px;font-size:22px}
+    .layout{display:grid;grid-template-columns:1fr 390px;gap:16px;margin-top:16px}.card{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow)}.pad{padding:20px}
+    .toolbar{display:grid;grid-template-columns:1.2fr .8fr .9fr .9fr;gap:10px}.input,.select,.textarea{width:100%;height:50px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:0 14px;font-size:15px}.textarea{height:110px;padding:12px 14px;resize:vertical}.toggle{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:10px}
     .switchWrap{display:flex;align-items:center;gap:10px}.switch{position:relative;width:52px;height:30px;display:inline-block}.switch input{display:none}.slider{position:absolute;inset:0;background:#d1d5db;border-radius:999px;transition:.15s}.slider:before{content:'';position:absolute;width:22px;height:22px;left:4px;top:4px;background:#fff;border-radius:50%;transition:.15s;box-shadow:0 2px 8px rgba(15,23,42,.15)}.switch input:checked + .slider{background:var(--brand)}.switch input:checked + .slider:before{transform:translateX(22px)}
     .groups{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.groupCard{padding:16px;border:1px solid var(--line);border-radius:22px;background:#fff;cursor:pointer;transition:.15s}.groupCard:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.groupCard.active{box-shadow:inset 0 0 0 1px var(--brand);border-color:var(--brand)}.prodTop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.prodBrand{font-size:14px;color:var(--muted)}.prodName{font-size:18px;font-weight:800;line-height:1.18;margin-top:4px;min-height:44px}.sizes{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.sizeTag{padding:6px 10px;border-radius:999px;background:var(--soft);font-size:12px}.prodPrice{margin-top:14px;font-size:26px;font-weight:900;letter-spacing:-.03em}
-    .sticky{position:sticky;top:16px}.selbox{background:var(--brand);color:#fff;border-radius:22px;padding:18px}.selbox small{color:#cbd5e1}.pricing{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.pricing div{background:rgba(255,255,255,.08);padding:12px;border-radius:16px}.pricing strong{display:block;margin-top:4px;font-size:22px}
-    .lineBox{background:var(--soft);border-radius:18px;padding:14px;margin-top:12px}.lineRow{display:flex;justify-content:space-between;gap:10px;font-size:14px}.lineRow + .lineRow{margin-top:8px}.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.chip{height:42px;border-radius:14px;background:var(--soft);font-weight:800}.chip.active{background:var(--brand);border-color:var(--brand);color:#fff}.message{white-space:pre-line;background:var(--soft);border-radius:18px;padding:14px;line-height:1.7;font-size:14px;color:#334155}
+    .sticky{position:sticky;top:16px}.lineBox{background:var(--soft);border-radius:18px;padding:14px;margin-top:12px}.lineRow{display:flex;justify-content:space-between;gap:10px;font-size:14px}.lineRow + .lineRow{margin-top:8px}.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.chip{height:42px;border-radius:14px;background:var(--soft);font-weight:800}.chip.active{background:var(--brand);border-color:var(--brand);color:#fff}.message{white-space:pre-line;background:var(--soft);border-radius:18px;padding:14px;line-height:1.7;font-size:14px;color:#334155}
     .adminWrap{margin-top:18px}.adminHead{display:flex;justify-content:space-between;gap:12px;align-items:center}.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:2px}.tab{padding:10px 14px;border-radius:14px;white-space:nowrap;font-weight:700}.tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}.panelGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.panelGrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.inline2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.inline3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.tableWrap{overflow:auto;border:1px solid var(--line);border-radius:20px}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.table th{position:sticky;top:0;background:#f8fafc;z-index:1}.table input,.table select{min-width:90px;width:100%;height:38px;border:1px solid var(--line);border-radius:10px;padding:0 10px}.zoneCard{padding:16px;border:1px solid var(--line);border-radius:20px;background:#fff}.listBox{display:grid;gap:10px}.helper{font-size:12px;color:var(--muted)}
     .modal{position:fixed;inset:0;background:rgba(15,23,42,.35);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}.modalCard{width:min(460px,100%);background:#fff;border-radius:28px;border:1px solid var(--line);box-shadow:0 20px 50px rgba(15,23,42,.18)}.foot{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
     @media (max-width:1100px){.hero,.layout{grid-template-columns:1fr}.heroRight{border-left:0;border-top:1px solid var(--line)}.sticky{position:static}.groups{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:760px){h1{font-size:34px}.wrap{padding:12px}.heroLeft,.pad{padding:18px}.miniCards,.toolbar,.groups,.panelGrid,.panelGrid3,.inline2,.inline3{grid-template-columns:1fr}.heroImage{min-height:180px}.chips{grid-template-columns:repeat(2,1fr)}.table th,.table td{padding:8px;font-size:12px}}
+    @media (max-width:760px){h1{font-size:34px}.wrap{padding:12px}.heroLeft,.heroRight,.pad{padding:18px}.miniCards,.toolbar,.groups,.panelGrid,.panelGrid3,.inline2,.inline3{grid-template-columns:1fr}.chips{grid-template-columns:repeat(2,1fr)}.table th,.table td{padding:8px;font-size:12px}.heroImageBox img{height:220px}}
   </style>
 </head>
 <body>
@@ -42,17 +45,28 @@
           <a href="#catalogo" class="badge">Catálogo online</a>
           <span class="badge">Pedido por WhatsApp</span>
         </div>
-        <h1>Elegí el alimento y pedilo sin moverte.</h1>
-        <div class="muted">Pensado para celular, fácil de usar y con botones grandes para que cualquier persona pueda elegir producto, presentación y pedir rápido.</div>
-        <div class="miniCards">
-          <div class="mini">Compra simple<strong>En pocos toques</strong></div>
-          <div class="mini">Formato flexible<strong>Bolsa o fraccionado</strong></div>
-          <div class="mini">Entrega clara<strong id="miniDeliveryText">Miércoles, viernes y sábado envío gratis</strong></div>
+        <h1>Comprá el alimento de tu mascota desde la comodidad de tu casa.</h1>
+        <div class="muted">Hacé tu pedido en pocos pasos, elegí la presentación que más te convenga y recibí una atención simple, rápida y pensada para que volver a comprar sea cada vez más fácil.</div>
+        <div class="heroImageBox">
+          <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1400&q=80" alt="Golden Retriever" />
+          <div class="heroCaption">Tu tienda online de mascotas, con pedido simple por WhatsApp y recompra rápida.</div>
         </div>
       </div>
       <div class="heroRight">
-        <div class="heroImage heroDog"><div class="heroLabel">Golden Retriever · pedido simple</div></div>
-        <div class="heroImage heroCat"><div class="heroLabel">Gatos cómodos · recompra rápida</div></div>
+        <div class="quickBox">
+          <small>Pedido rápido</small>
+          <div style="font-size:26px;font-weight:900;margin-top:6px" id="heroBrand"></div>
+          <div style="color:#cbd5e1;margin-top:4px" id="heroName"></div>
+          <div class="quickPricing">
+            <div><small>Bolsa</small><strong id="heroBag"></strong></div>
+            <div><small>Por kg</small><strong id="heroKg"></strong></div>
+          </div>
+        </div>
+        <div class="miniCards" style="margin-top:14px">
+          <div class="mini">Compra simple<strong>En pocos toques</strong></div>
+          <div class="mini">Más flexible<strong>Bolsa o fraccionado</strong></div>
+          <div class="mini">Entrega clara<strong id="miniDeliveryText">Miércoles, viernes y sábado envío gratis</strong></div>
+        </div>
       </div>
     </section>
 
@@ -60,10 +74,11 @@
       <div>
         <div class="card pad">
           <div class="sectionTitle">Catálogo PETPOINT</div>
-          <div class="sub">Buscá, filtrá y elegí. Cada tarjeta muestra las presentaciones disponibles y el precio cambia según la que selecciones.</div>
+          <div class="sub">Buscá por marca, especie o categoría. Cada tarjeta ya muestra las presentaciones y el precio cambia cuando elegís una distinta.</div>
           <div class="toolbar" style="margin-top:14px">
             <input id="search" class="input" placeholder="Buscar marca o producto" />
-            <select id="species" class="select"><option>Todos</option><option>Perros</option><option>Gatos</option></select>
+            <select id="species" class="select"><option>Todos</option><option>Perros</option><option>Gatos</option><option>General</option></select>
+            <select id="category" class="select"></select>
             <select id="brand" class="select"></select>
           </div>
           <div class="toggle">
@@ -81,20 +96,16 @@
         <div class="card pad">
           <div class="sectionTitle">Tu pedido</div>
           <div class="sub">Elegí presentación, bolsa o fraccionado, y hacé el pedido o consulta por WhatsApp.</div>
-          <div class="selbox" style="margin-top:14px">
-            <small>Producto seleccionado</small>
-            <div id="selBrand" style="font-size:24px;font-weight:900;margin-top:4px"></div>
+
+          <div class="lineBox" style="background:#111827;color:#fff">
+            <div style="font-size:24px;font-weight:900" id="selBrand"></div>
             <div id="selName" style="color:#cbd5e1;margin-top:4px"></div>
-            <div class="pricing">
-              <div><small>Bolsa</small><strong id="heroBag"></strong></div>
-              <div><small>Por kg</small><strong id="heroKg"></strong></div>
-            </div>
           </div>
 
           <div class="lineBox">
             <div style="font-weight:800;margin-bottom:8px">Presentación</div>
             <select id="variantSelect" class="select"></select>
-            <div class="helper" style="margin-top:8px">El precio cambia automáticamente según la presentación elegida.</div>
+            <div class="helper" style="margin-top:8px">Elegí el tamaño o presentación y el precio se actualiza automáticamente.</div>
           </div>
 
           <div class="toggle">
@@ -135,7 +146,6 @@
               <select id="zoneSelect" class="select"></select>
               <input id="custAddress" class="input" placeholder="Dirección" />
             </div>
-            <div class="helper" style="margin-top:8px">Si volvés a entrar desde este mismo celular, estos datos pueden quedar recordados.</div>
           </div>
 
           <div class="lineBox" style="background:#111827;color:#fff">
@@ -162,7 +172,7 @@
         <div class="adminHead">
           <div>
             <div class="sectionTitle">Panel interno PETPOINT</div>
-            <div class="sub">Las referencias internas como origen o lista sólo se ven acá. El cliente no las ve en el catálogo.</div>
+            <div class="sub">Preparado para sumar alimento, collares, pipetas, cuchas, juguetes y más productos a futuro.</div>
           </div>
           <div class="rowBtns">
             <button id="exportBackup" class="btn">Exportar backup</button>
@@ -200,9 +210,9 @@
           </div>
           <div class="card pad" style="margin-top:14px;background:#f8fafc">
             <div class="sectionTitle" style="font-size:18px">Ajuste masivo</div>
-            <div class="sub">Podés sumar o restar porcentaje a toda una lista, a un origen, una marca o un grupo de producto.</div>
+            <div class="sub">Podés aplicar porcentajes a todos los productos, a una marca, a una categoría o a un grupo completo.</div>
             <div class="inline3" style="margin-top:12px">
-              <div class="field"><label>Aplicar sobre</label><select id="bulkTarget" class="select"><option value="all">Todos</option><option value="source">Origen / lista</option><option value="brand">Marca</option><option value="groupKey">Grupo</option></select></div>
+              <div class="field"><label>Aplicar sobre</label><select id="bulkTarget" class="select"><option value="all">Todos</option><option value="source">Origen / lista</option><option value="brand">Marca</option><option value="category">Categoría</option><option value="groupKey">Grupo</option></select></div>
               <div class="field"><label>Valor objetivo</label><select id="bulkValue" class="select"></select></div>
               <div class="field"><label>Variación %</label><input id="bulkPercent" class="input" type="number" step="0.1" placeholder="Ej: 10 o -5" /></div>
             </div>
@@ -225,7 +235,7 @@
           <div class="panelGrid">
             <div class="card pad">
               <div class="sectionTitle" style="font-size:18px">Importar CSV</div>
-              <div class="sub">Formato: source,species,brand,groupKey,publicName,sizeKg,baseCost,fractionable,marginBag,marginFraction</div>
+              <div class="sub">Formato: source,category,species,brand,groupKey,publicName,variantLabel,packQty,unitType,baseCost,fractionable,marginBag,marginFraction</div>
               <input id="csvFile" type="file" accept=".csv" style="margin-top:12px" />
               <div class="rowBtns" style="margin-top:12px"><button id="importCsvBtn" class="btn primary">Importar CSV</button></div>
             </div>
@@ -238,10 +248,10 @@
           </div>
           <div class="card pad" style="margin-top:14px;background:#f8fafc">
             <div class="sectionTitle" style="font-size:18px">Plantilla CSV</div>
-            <textarea class="textarea" readonly>source,species,brand,groupKey,publicName,sizeKg,baseCost,fractionable,marginBag,marginFraction
-Royal Canin,Perros,Royal Canin,rc-medium-adult,Medium Adult,15,155229.91,false,,
-Alarcon,Perros,Old Prince,op-equilibrium-adulto-mg,Equilibrium Adulto Medium & Large,20,64770.1,true,,
-Salice,Perros,Maintenance,maintenance-criadores-adulto,Criadores Adultos,22,34107.86,true,,</textarea>
+            <textarea class="textarea" readonly>source,category,species,brand,groupKey,publicName,variantLabel,packQty,unitType,baseCost,fractionable,marginBag,marginFraction
+Royal Canin,Alimento,Perros,Royal Canin,rc-medium-adult,Medium Adult,15 kg,15,kg,155229.91,false,,
+Alarcon,Alimento,Perros,Old Prince,op-equilibrium-adulto-mg,Equilibrium Adulto Medium & Large,20 kg,20,kg,64770.1,true,,
+Manual,Accesorios,General,PETPOINT,collar-simple,Collar clásico,Rojo,1,un,4500,false,,</textarea>
           </div>
         </div>
 
@@ -277,9 +287,9 @@ Salice,Perros,Maintenance,maintenance-criadores-adulto,Criadores Adultos,22,3410
   </div>
 
   <script>
-    const STORAGE_KEY='petpoint_app_state_v2';
+    const STORAGE_KEY='petpoint_app_state_v3';
     const DEFAULT_STATE={
-      config:{brandName:'PETPOINT',adminPassword:'petpoint2026',whatsappOrders:'5492262655225',whatsappConsult:'5492262655225',instagram:'',mercadoPagoLink:'',freeDeliveryText:'Miércoles, viernes y sábado envío gratis',shippingDefault:2500,marginBag:10,marginFraction:18,roundTo:100,mpPublicKey:'',mpPreferenceUrl:'',paymentMode:'link',showInstagram:true},
+      config:{brandName:'PETPOINT',adminPassword:'0007',whatsappOrders:'5492262655225',whatsappConsult:'5492262655225',instagram:'',mercadoPagoLink:'',freeDeliveryText:'Miércoles, viernes y sábado envío gratis',shippingDefault:2500,marginBag:10,marginFraction:18,roundTo:100,mpPublicKey:'',mpPreferenceUrl:'',paymentMode:'link',showInstagram:true},
       zones:[
         {id:1,name:'Centro Necochea',freeDays:'Miércoles y viernes',free:true,extraShipping:1800,notes:'Gratis en rutas programadas'},
         {id:2,name:'Quequén',freeDays:'Viernes y sábado',free:true,extraShipping:2500,notes:'Gratis en días asignados'},
@@ -287,44 +297,46 @@ Salice,Perros,Maintenance,maintenance-criadores-adulto,Criadores Adultos,22,3410
         {id:4,name:'Otra zona',freeDays:'A coordinar',free:false,extraShipping:3000,notes:'Consultar costo según distancia'}
       ],
       products:[
-        {id:1,source:'Alarcon',species:'Perros',brand:'Old Prince',groupKey:'op-equilibrium-adulto-mg',publicName:'Equilibrium Adulto Medium & Large',sizeKg:3,baseCost:17000,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:2,source:'Alarcon',species:'Perros',brand:'Old Prince',groupKey:'op-equilibrium-adulto-mg',publicName:'Equilibrium Adulto Medium & Large',sizeKg:7.5,baseCost:52000,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:3,source:'Alarcon',species:'Perros',brand:'Old Prince',groupKey:'op-equilibrium-adulto-mg',publicName:'Equilibrium Adulto Medium & Large',sizeKg:15,baseCost:59577.46,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:4,source:'Alarcon',species:'Perros',brand:'Old Prince',groupKey:'op-equilibrium-adulto-mg',publicName:'Equilibrium Adulto Medium & Large',sizeKg:20,baseCost:64770.1,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:1,source:'Alarcon',category:'Alimento',species:'Perros',brand:'Old Prince',groupKey:'op-equilibrium-adulto-mg',publicName:'Equilibrium Adulto Medium & Large',variantLabel:'3 kg',packQty:3,unitType:'kg',baseCost:17000,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:2,source:'Alarcon',category:'Alimento',species:'Perros',brand:'Old Prince',groupKey:'op-equilibrium-adulto-mg',publicName:'Equilibrium Adulto Medium & Large',variantLabel:'7,5 kg',packQty:7.5,unitType:'kg',baseCost:52000,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:3,source:'Alarcon',category:'Alimento',species:'Perros',brand:'Old Prince',groupKey:'op-equilibrium-adulto-mg',publicName:'Equilibrium Adulto Medium & Large',variantLabel:'15 kg',packQty:15,unitType:'kg',baseCost:59577.46,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:4,source:'Alarcon',category:'Alimento',species:'Perros',brand:'Old Prince',groupKey:'op-equilibrium-adulto-mg',publicName:'Equilibrium Adulto Medium & Large',variantLabel:'20 kg',packQty:20,unitType:'kg',baseCost:64770.1,fractionable:true,marginBag:null,marginFraction:null,active:true},
 
-        {id:5,source:'Alarcon',species:'Perros',brand:'Old Prince',groupKey:'op-premium-cordero',publicName:'Premium Adulto Cordero y Arroz',sizeKg:3,baseCost:18400,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:6,source:'Alarcon',species:'Perros',brand:'Old Prince',groupKey:'op-premium-cordero',publicName:'Premium Adulto Cordero y Arroz',sizeKg:7.5,baseCost:51781.04,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:7,source:'Alarcon',species:'Perros',brand:'Old Prince',groupKey:'op-premium-cordero',publicName:'Premium Adulto Cordero y Arroz',sizeKg:15,baseCost:51781.04,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:5,source:'Alarcon',category:'Alimento',species:'Perros',brand:'Old Prince',groupKey:'op-premium-cordero',publicName:'Premium Adulto Cordero y Arroz',variantLabel:'3 kg',packQty:3,unitType:'kg',baseCost:18400,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:6,source:'Alarcon',category:'Alimento',species:'Perros',brand:'Old Prince',groupKey:'op-premium-cordero',publicName:'Premium Adulto Cordero y Arroz',variantLabel:'7,5 kg',packQty:7.5,unitType:'kg',baseCost:51781.04,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:7,source:'Alarcon',category:'Alimento',species:'Perros',brand:'Old Prince',groupKey:'op-premium-cordero',publicName:'Premium Adulto Cordero y Arroz',variantLabel:'15 kg',packQty:15,unitType:'kg',baseCost:51781.04,fractionable:true,marginBag:null,marginFraction:null,active:true},
 
-        {id:8,source:'Salice',species:'Perros',brand:'Kongo',groupKey:'kongo-natural-adulto-mg',publicName:'Natural Adultos Medianos y Grandes',sizeKg:15,baseCost:22700.42,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:9,source:'Salice',species:'Perros',brand:'Kongo',groupKey:'kongo-natural-adulto-mg',publicName:'Natural Adultos Medianos y Grandes',sizeKg:21,baseCost:30267.55,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:8,source:'Salice',category:'Alimento',species:'Perros',brand:'Kongo',groupKey:'kongo-natural-adulto-mg',publicName:'Natural Adultos Medianos y Grandes',variantLabel:'15 kg',packQty:15,unitType:'kg',baseCost:22700.42,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:9,source:'Salice',category:'Alimento',species:'Perros',brand:'Kongo',groupKey:'kongo-natural-adulto-mg',publicName:'Natural Adultos Medianos y Grandes',variantLabel:'21 kg',packQty:21,unitType:'kg',baseCost:30267.55,fractionable:true,marginBag:null,marginFraction:null,active:true},
 
-        {id:10,source:'Salice',species:'Perros',brand:'Maintenance',groupKey:'maintenance-criadores-adulto',publicName:'Criadores Adultos',sizeKg:3,baseCost:5304.53,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:11,source:'Salice',species:'Perros',brand:'Maintenance',groupKey:'maintenance-criadores-adulto',publicName:'Criadores Adultos',sizeKg:15,baseCost:23165.83,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:12,source:'Salice',species:'Perros',brand:'Maintenance',groupKey:'maintenance-criadores-adulto',publicName:'Criadores Adultos',sizeKg:22,baseCost:34107.86,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:10,source:'Salice',category:'Alimento',species:'Perros',brand:'Maintenance',groupKey:'maintenance-criadores-adulto',publicName:'Criadores Adultos',variantLabel:'3 kg',packQty:3,unitType:'kg',baseCost:5304.53,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:11,source:'Salice',category:'Alimento',species:'Perros',brand:'Maintenance',groupKey:'maintenance-criadores-adulto',publicName:'Criadores Adultos',variantLabel:'15 kg',packQty:15,unitType:'kg',baseCost:23165.83,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:12,source:'Salice',category:'Alimento',species:'Perros',brand:'Maintenance',groupKey:'maintenance-criadores-adulto',publicName:'Criadores Adultos',variantLabel:'22 kg',packQty:22,unitType:'kg',baseCost:34107.86,fractionable:true,marginBag:null,marginFraction:null,active:true},
 
-        {id:13,source:'Salice',species:'Perros',brand:'Voraz',groupKey:'voraz-adulto-carne',publicName:'Adulto Carne',sizeKg:3,baseCost:3448.32,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:14,source:'Salice',species:'Perros',brand:'Voraz',groupKey:'voraz-adulto-carne',publicName:'Adulto Carne',sizeKg:10,baseCost:15644.54,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:15,source:'Salice',species:'Perros',brand:'Voraz',groupKey:'voraz-adulto-carne',publicName:'Adulto Carne',sizeKg:15,baseCost:20349.04,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:16,source:'Salice',species:'Perros',brand:'Voraz',groupKey:'voraz-adulto-carne',publicName:'Adulto Carne',sizeKg:20,baseCost:23313.69,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:13,source:'Salice',category:'Alimento',species:'Perros',brand:'Voraz',groupKey:'voraz-adulto-carne',publicName:'Adulto Carne',variantLabel:'3 kg',packQty:3,unitType:'kg',baseCost:3448.32,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:14,source:'Salice',category:'Alimento',species:'Perros',brand:'Voraz',groupKey:'voraz-adulto-carne',publicName:'Adulto Carne',variantLabel:'10 kg',packQty:10,unitType:'kg',baseCost:15644.54,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:15,source:'Salice',category:'Alimento',species:'Perros',brand:'Voraz',groupKey:'voraz-adulto-carne',publicName:'Adulto Carne',variantLabel:'15 kg',packQty:15,unitType:'kg',baseCost:20349.04,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:16,source:'Salice',category:'Alimento',species:'Perros',brand:'Voraz',groupKey:'voraz-adulto-carne',publicName:'Adulto Carne',variantLabel:'20 kg',packQty:20,unitType:'kg',baseCost:23313.69,fractionable:true,marginBag:null,marginFraction:null,active:true},
 
-        {id:17,source:'Royal Canin',species:'Perros',brand:'Royal Canin',groupKey:'rc-medium-adult',publicName:'Medium Adult',sizeKg:3,baseCost:40752.41,fractionable:false,marginBag:null,marginFraction:null,active:true},
-        {id:18,source:'Royal Canin',species:'Perros',brand:'Royal Canin',groupKey:'rc-medium-adult',publicName:'Medium Adult',sizeKg:7.5,baseCost:94549.90,fractionable:false,marginBag:null,marginFraction:null,active:true},
-        {id:19,source:'Royal Canin',species:'Perros',brand:'Royal Canin',groupKey:'rc-medium-adult',publicName:'Medium Adult',sizeKg:15,baseCost:155229.91,fractionable:false,marginBag:null,marginFraction:null,active:true},
+        {id:17,source:'Royal Canin',category:'Alimento',species:'Perros',brand:'Royal Canin',groupKey:'rc-medium-adult',publicName:'Medium Adult',variantLabel:'3 kg',packQty:3,unitType:'kg',baseCost:40752.41,fractionable:false,marginBag:null,marginFraction:null,active:true},
+        {id:18,source:'Royal Canin',category:'Alimento',species:'Perros',brand:'Royal Canin',groupKey:'rc-medium-adult',publicName:'Medium Adult',variantLabel:'7,5 kg',packQty:7.5,unitType:'kg',baseCost:94549.9,fractionable:false,marginBag:null,marginFraction:null,active:true},
+        {id:19,source:'Royal Canin',category:'Alimento',species:'Perros',brand:'Royal Canin',groupKey:'rc-medium-adult',publicName:'Medium Adult',variantLabel:'15 kg',packQty:15,unitType:'kg',baseCost:155229.91,fractionable:false,marginBag:null,marginFraction:null,active:true},
 
-        {id:20,source:'Alarcon',species:'Gatos',brand:'Old Prince',groupKey:'op-cats-complete-care',publicName:'Cats Complete Care',sizeKg:3,baseCost:22014.6,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:21,source:'Alarcon',species:'Gatos',brand:'Old Prince',groupKey:'op-cats-complete-care',publicName:'Cats Complete Care',sizeKg:7.5,baseCost:51921.26,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:20,source:'Alarcon',category:'Alimento',species:'Gatos',brand:'Old Prince',groupKey:'op-cats-complete-care',publicName:'Cats Complete Care',variantLabel:'3 kg',packQty:3,unitType:'kg',baseCost:22014.6,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:21,source:'Alarcon',category:'Alimento',species:'Gatos',brand:'Old Prince',groupKey:'op-cats-complete-care',publicName:'Cats Complete Care',variantLabel:'7,5 kg',packQty:7.5,unitType:'kg',baseCost:51921.26,fractionable:true,marginBag:null,marginFraction:null,active:true},
 
-        {id:22,source:'Salice',species:'Gatos',brand:'Kongo',groupKey:'kongo-gato-natural-carne-pollo',publicName:'Gato Adulto Natural Carne y Pollo',sizeKg:1,baseCost:3262.5,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:23,source:'Salice',species:'Gatos',brand:'Kongo',groupKey:'kongo-gato-natural-carne-pollo',publicName:'Gato Adulto Natural Carne y Pollo',sizeKg:8,baseCost:21839.09,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:24,source:'Salice',species:'Gatos',brand:'Kongo',groupKey:'kongo-gato-natural-carne-pollo',publicName:'Gato Adulto Natural Carne y Pollo',sizeKg:15,baseCost:38897.3,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:22,source:'Salice',category:'Alimento',species:'Gatos',brand:'Kongo',groupKey:'kongo-gato-natural-carne-pollo',publicName:'Gato Adulto Natural Carne y Pollo',variantLabel:'1 kg',packQty:1,unitType:'kg',baseCost:3262.5,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:23,source:'Salice',category:'Alimento',species:'Gatos',brand:'Kongo',groupKey:'kongo-gato-natural-carne-pollo',publicName:'Gato Adulto Natural Carne y Pollo',variantLabel:'8 kg',packQty:8,unitType:'kg',baseCost:21839.09,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:24,source:'Salice',category:'Alimento',species:'Gatos',brand:'Kongo',groupKey:'kongo-gato-natural-carne-pollo',publicName:'Gato Adulto Natural Carne y Pollo',variantLabel:'15 kg',packQty:15,unitType:'kg',baseCost:38897.3,fractionable:true,marginBag:null,marginFraction:null,active:true},
 
-        {id:25,source:'Alarcon',species:'Gatos',brand:'Fawna',groupKey:'fawna-cat-sterilized',publicName:'Adult Cat Sterilized',sizeKg:3,baseCost:25801.93,fractionable:true,marginBag:null,marginFraction:null,active:true},
-        {id:26,source:'Alarcon',species:'Gatos',brand:'Fawna',groupKey:'fawna-cat-sterilized',publicName:'Adult Cat Sterilized',sizeKg:7.5,baseCost:85615.48,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:25,source:'Alarcon',category:'Alimento',species:'Gatos',brand:'Fawna',groupKey:'fawna-cat-sterilized',publicName:'Adult Cat Sterilized',variantLabel:'3 kg',packQty:3,unitType:'kg',baseCost:25801.93,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:26,source:'Alarcon',category:'Alimento',species:'Gatos',brand:'Fawna',groupKey:'fawna-cat-sterilized',publicName:'Adult Cat Sterilized',variantLabel:'7,5 kg',packQty:7.5,unitType:'kg',baseCost:85615.48,fractionable:true,marginBag:null,marginFraction:null,active:true},
 
-        {id:27,source:'Royal Canin',species:'Gatos',brand:'Royal Canin',groupKey:'rc-kitten',publicName:'Kitten',sizeKg:0.4,baseCost:12622.2,fractionable:false,marginBag:null,marginFraction:null,active:true},
-        {id:28,source:'Royal Canin',species:'Gatos',brand:'Royal Canin',groupKey:'rc-kitten',publicName:'Kitten',sizeKg:1.5,baseCost:37553.16,fractionable:false,marginBag:null,marginFraction:null,active:true},
-        {id:29,source:'Royal Canin',species:'Gatos',brand:'Royal Canin',groupKey:'rc-kitten',publicName:'Kitten',sizeKg:7.5,baseCost:137969.7,fractionable:false,marginBag:null,marginFraction:null,active:true}
+        {id:27,source:'Royal Canin',category:'Alimento',species:'Gatos',brand:'Royal Canin',groupKey:'rc-kitten',publicName:'Kitten',variantLabel:'400 g',packQty:0.4,unitType:'kg',baseCost:12622.2,fractionable:false,marginBag:null,marginFraction:null,active:true},
+        {id:28,source:'Royal Canin',category:'Alimento',species:'Gatos',brand:'Royal Canin',groupKey:'rc-kitten',publicName:'Kitten',variantLabel:'1,5 kg',packQty:1.5,unitType:'kg',baseCost:37553.16,fractionable:false,marginBag:null,marginFraction:null,active:true},
+        {id:29,source:'Royal Canin',category:'Alimento',species:'Gatos',brand:'Royal Canin',groupKey:'rc-kitten',publicName:'Kitten',variantLabel:'7,5 kg',packQty:7.5,unitType:'kg',baseCost:137969.7,fractionable:false,marginBag:null,marginFraction:null,active:true},
+
+        {id:30,source:'Manual',category:'Accesorios',species:'General',brand:'PETPOINT',groupKey:'collar-clasico',publicName:'Collar clásico',variantLabel:'Rojo',packQty:1,unitType:'un',baseCost:4500,fractionable:false,marginBag:35,marginFraction:null,active:false}
       ],
       ui:{adminUnlocked:false,activeTab:'general'},
       customer:{name:'',phone:'',address:'',zoneId:1},
@@ -338,31 +350,30 @@ Salice,Perros,Maintenance,maintenance-criadores-adulto,Criadores Adultos,22,3410
     function roundStep(v,s){return Math.round(Number(v||0)/Number(s||1))*Number(s||1)}
     function nextId(arr){return arr.length?Math.max(...arr.map(x=>Number(x.id)||0))+1:1}
     const state=loadState();
-    const ui={species:'Todos',brand:'Todas',search:'',selectedGroupKey:null,selectedVariantId:null,fractionMode:true,fractionKg:2};
+    const ui={species:'Todos',category:'Todas',brand:'Todas',search:'',selectedGroupKey:null,selectedVariantId:null,fractionMode:true,fractionKg:2};
     const $=id=>document.getElementById(id);
 
     function activeProducts(){return state.products.filter(p=>p.active!==false)}
     function brands(){return ['Todas', ...new Set(activeProducts().map(p=>p.brand))]}
+    function categories(){return ['Todas', ...new Set(activeProducts().map(p=>p.category||'Sin categoría'))]}
     function sources(){return ['Todos', ...new Set(state.products.map(p=>p.source||'Sin origen'))]}
     function groups(){
       const map=new Map();
       activeProducts().forEach(p=>{
         const key=p.groupKey||`${p.brand}-${p.publicName}`;
-        if(!map.has(key)) map.set(key,{groupKey:key,species:p.species,brand:p.brand,publicName:p.publicName||p.name||'Producto',variants:[]});
+        if(!map.has(key)) map.set(key,{groupKey:key,category:p.category||'Sin categoría',species:p.species,brand:p.brand,publicName:p.publicName||'Producto',variants:[]});
         map.get(key).variants.push(p);
       });
-      return [...map.values()].map(g=>({
-        ...g,
-        variants:g.variants.sort((a,b)=>Number(a.sizeKg)-Number(b.sizeKg))
-      }));
+      return [...map.values()].map(g=>({...g,variants:g.variants.sort((a,b)=>Number(a.packQty)-Number(b.packQty))}))
     }
     function filteredGroups(){
       return groups().filter(g=>{
         const a=ui.species==='Todos'||g.species===ui.species;
         const b=ui.brand==='Todas'||g.brand===ui.brand;
+        const c=ui.category==='Todas'||g.category===ui.category;
         const q=ui.search.trim().toLowerCase();
-        const t=`${g.brand} ${g.publicName} ${g.species}`.toLowerCase();
-        return a&&b&&(!q||t.includes(q));
+        const t=`${g.brand} ${g.publicName} ${g.species} ${g.category}`.toLowerCase();
+        return a&&b&&c&&(!q||t.includes(q));
       })
     }
     function selectedGroup(){
@@ -375,26 +386,20 @@ Salice,Perros,Maintenance,maintenance-criadores-adulto,Criadores Adultos,22,3410
       if(!g.variants.find(v=>Number(v.id)===Number(ui.selectedVariantId))) ui.selectedVariantId=g.variants[0]?.id;
       return g.variants.find(v=>Number(v.id)===Number(ui.selectedVariantId))||g.variants[0]
     }
-    function margins(p){
-      return {
-        bag:(p.marginBag===null||p.marginBag===undefined||p.marginBag==='')?Number(state.config.marginBag):Number(p.marginBag),
-        fraction:(p.marginFraction===null||p.marginFraction===undefined||p.marginFraction==='')?Number(state.config.marginFraction):Number(p.marginFraction)
-      }
-    }
+    function margins(p){return {bag:(p.marginBag===null||p.marginBag===undefined||p.marginBag==='')?Number(state.config.marginBag):Number(p.marginBag),fraction:(p.marginFraction===null||p.marginFraction===undefined||p.marginFraction==='')?Number(state.config.marginFraction):Number(p.marginFraction)}}
+    function variantLabel(p){return p.variantLabel || `${p.packQty} ${p.unitType}`}
     function priceInfo(p){
-      const m=margins(p);
-      const bag=roundStep(Number(p.baseCost)*(1+m.bag/100), Number(state.config.roundTo));
-      const kilo=roundStep((Number(p.baseCost)/Number(p.sizeKg))*(1+m.fraction/100), Number(state.config.roundTo));
-      const max=Math.max(1, Math.floor(Number(p.sizeKg)||1));
-      const kg=Math.min(Math.max(Number(ui.fractionKg)||1,1), max);
-      return {bag,kilo,kg,total:kilo*kg,max}
+      const m=margins(p); const bag=roundStep(Number(p.baseCost)*(1+m.bag/100), Number(state.config.roundTo));
+      const perUnitBase = p.unitType==='kg' ? (Number(p.baseCost)/Math.max(Number(p.packQty)||1,1)) : Number(p.baseCost);
+      const kilo=roundStep(perUnitBase*(1+m.fraction/100), Number(state.config.roundTo));
+      const max=Math.max(1, Math.floor(Number(p.packQty)||1)); const qty=Math.min(Math.max(Number(ui.fractionKg)||1,1), max);
+      return {bag,kilo,qty,total:kilo*qty,max}
     }
     function selectedZone(){return state.zones.find(z=>Number(z.id)===Number(state.customer.zoneId))||state.zones[0]}
     function freeDeliveryForZone(zone){return zone&&zone.free===true}
     function shippingAmount(zone){return Number(zone&&zone.extraShipping!=null?zone.extraShipping:state.config.shippingDefault)||0}
     function orderMessage(){
-      const g=selectedGroup(); const v=selectedVariant(); if(!g||!v) return '';
-      const px=priceInfo(v); const zone=selectedZone(); const c=state.customer;
+      const g=selectedGroup(); const v=selectedVariant(); if(!g||!v) return ''; const px=priceInfo(v); const zone=selectedZone(); const c=state.customer;
       const common=`Hola ${state.config.brandName}, quiero hacer este pedido:
 • Cliente: ${c.name||'-'}
 • Zona: ${zone?zone.name:'-'}
@@ -403,21 +408,24 @@ Salice,Perros,Maintenance,maintenance-criadores-adulto,Criadores Adultos,22,3410
       const shippingLine=freeDeliveryForZone(zone)?`
 • Beneficio: ${state.config.freeDeliveryText}`:`
 • Envío estimado fuera de ruta gratis: ${money(shippingAmount(zone))}`;
-      if(ui.fractionMode&&v.fractionable){return `${common}
+      if(ui.fractionMode&&v.fractionable&&v.unitType==='kg'){return `${common}
 • Producto: ${g.brand} - ${g.publicName}
-• Presentación base: ${v.sizeKg} kg
-• Cantidad: ${px.kg} kg fraccionado
+• Presentación base: ${variantLabel(v)}
+• Cantidad: ${px.qty} kg fraccionado
 • Precio estimado: ${money(px.total)}${shippingLine}`}
       return `${common}
 • Producto: ${g.brand} - ${g.publicName}
-• Presentación: ${v.sizeKg} kg
+• Presentación: ${variantLabel(v)}
 • Precio estimado: ${money(px.bag)}${shippingLine}`
     }
 
-    function renderBrandSelect(){ $('brand').innerHTML=brands().map(b=>`<option value="${b}">${b==='Todas'?'Todas las marcas':b}</option>`).join(''); $('brand').value=ui.brand }
+    function renderFilterSelects(){
+      $('brand').innerHTML=brands().map(b=>`<option value="${b}">${b==='Todas'?'Todas las marcas':b}</option>`).join(''); $('brand').value=ui.brand;
+      $('category').innerHTML=categories().map(c=>`<option value="${c}">${c}</option>`).join(''); $('category').value=ui.category;
+    }
     function renderZoneSelect(){ $('zoneSelect').innerHTML=state.zones.map(z=>`<option value="${z.id}">${z.name}</option>`).join(''); $('zoneSelect').value=String(state.customer.zoneId||state.zones[0]?.id||1) }
     function syncTopLinks(){
-      document.title=`${state.config.brandName} | Catálogo + Panel`;
+      document.title=`${state.config.brandName} | Tienda online`;
       $('miniDeliveryText').textContent=state.config.freeDeliveryText;
       const consult=`https://wa.me/${state.config.whatsappConsult}?text=${encodeURIComponent('Hola, quiero hacer una consulta sobre los productos de '+state.config.brandName)}`;
       $('consultTop').href=consult; $('waConsultBtn').href=consult;
@@ -425,125 +433,89 @@ Salice,Perros,Maintenance,maintenance-criadores-adulto,Criadores Adultos,22,3410
       const mp=String(state.config.mercadoPagoLink||'').trim(); $('mpBtn').classList.toggle('hidden', !mp); if(mp) $('mpBtn').href=mp;
     }
     function renderGroups(){
-      const list=filteredGroups();
-      if(!list.find(g=>g.groupKey===ui.selectedGroupKey)&&list[0]) ui.selectedGroupKey=list[0].groupKey;
+      const list=filteredGroups(); if(!list.find(g=>g.groupKey===ui.selectedGroupKey)&&list[0]) ui.selectedGroupKey=list[0].groupKey;
       $('groups').innerHTML=list.map(g=>{
-        const first=g.variants[0]; const cheapest=Math.min(...g.variants.map(v=>priceInfo(v).bag));
-        const sizes=g.variants.map(v=>`<span class="sizeTag">${v.sizeKg} kg</span>`).join('');
-        return `<div class="groupCard ${g.groupKey===ui.selectedGroupKey?'active':''}" data-group="${g.groupKey}">
-          <div class="prodTop"><div><div class="prodBrand">${g.brand}</div><div class="prodName">${g.publicName}</div></div><div class="pill">${g.species}</div></div>
-          <div class="sizes">${sizes}</div>
-          <div class="prodPrice">Desde ${money(cheapest)}</div>
-        </div>`
+        const cheapest=Math.min(...g.variants.map(v=>priceInfo(v).bag));
+        const variants=g.variants.map(v=>`<span class="sizeTag">${variantLabel(v)}</span>`).join('');
+        return `<div class="groupCard ${g.groupKey===ui.selectedGroupKey?'active':''}" data-group="${g.groupKey}"><div class="prodTop"><div><div class="prodBrand">${g.brand}</div><div class="prodName">${g.publicName}</div></div><div class="pill">${g.category}</div></div><div class="sizes">${variants}</div><div class="prodPrice">Desde ${money(cheapest)}</div></div>`
       }).join('');
       document.querySelectorAll('.groupCard').forEach(node=>node.addEventListener('click',()=>{ui.selectedGroupKey=node.dataset.group; const g=selectedGroup(); ui.selectedVariantId=g?.variants[0]?.id; renderPublic()}));
     }
     function renderVariantSelect(){
-      const g=selectedGroup(); if(!g) return;
-      $('variantSelect').innerHTML=g.variants.map(v=>`<option value="${v.id}">${v.sizeKg} kg ${v.fractionable?'· fraccionable':''}</option>`).join('');
+      const g=selectedGroup(); if(!g){$('variantSelect').innerHTML=''; return;}
+      $('variantSelect').innerHTML=g.variants.map(v=>`<option value="${v.id}">${variantLabel(v)}</option>`).join('');
       $('variantSelect').value=String(ui.selectedVariantId||g.variants[0].id);
     }
     function renderPublic(){
-      renderBrandSelect(); renderZoneSelect(); syncTopLinks(); renderGroups(); renderVariantSelect();
+      renderFilterSelects(); renderZoneSelect(); syncTopLinks(); renderGroups(); renderVariantSelect();
       const g=selectedGroup(); const v=selectedVariant(); if(!g||!v) return; const px=priceInfo(v); const zone=selectedZone();
-      if(!v.fractionable) ui.fractionMode=false;
-      $('selBrand').textContent=g.brand; $('selName').textContent=g.publicName; $('heroBag').textContent=money(px.bag); $('heroKg').textContent=money(px.kilo);
-      $('fractionMode').checked=ui.fractionMode; $('fractionMode').disabled=!v.fractionable;
-      $('fractionBox').classList.toggle('hidden', !(ui.fractionMode&&v.fractionable));
-      $('bagBox').classList.toggle('hidden', ui.fractionMode&&v.fractionable);
-      $('kgLabel').textContent=`${px.kg} kg`; $('pricePerKg').textContent=money(px.kilo); $('fractionTotal').textContent=money(px.total);
-      $('bagPresentation').textContent=`Bolsa de ${v.sizeKg} kg`; $('bagTotal').textContent=money(px.bag);
-      $('fractionKg').max=String(px.max); $('fractionKg').value=String(px.kg);
-      document.querySelectorAll('.kg-btn').forEach(btn=>btn.classList.toggle('active', Number(btn.dataset.kg)===px.kg));
+      if(!(v.fractionable&&v.unitType==='kg')) ui.fractionMode=false;
+      $('heroBrand').textContent=g.brand; $('heroName').textContent=`${g.publicName} · ${variantLabel(v)}`; $('heroBag').textContent=money(px.bag); $('heroKg').textContent=v.unitType==='kg'?money(px.kilo):'No aplica';
+      $('selBrand').textContent=g.brand; $('selName').textContent=g.publicName;
+      $('fractionMode').checked=ui.fractionMode; $('fractionMode').disabled=!(v.fractionable&&v.unitType==='kg');
+      $('fractionBox').classList.toggle('hidden', !(ui.fractionMode&&v.fractionable&&v.unitType==='kg'));
+      $('bagBox').classList.toggle('hidden', ui.fractionMode&&v.fractionable&&v.unitType==='kg');
+      $('kgLabel').textContent=`${px.qty} kg`; $('pricePerKg').textContent=money(px.kilo); $('fractionTotal').textContent=money(px.total);
+      $('bagPresentation').textContent=variantLabel(v); $('bagTotal').textContent=money(px.bag); $('fractionKg').max=String(px.max); $('fractionKg').value=String(px.qty);
+      document.querySelectorAll('.kg-btn').forEach(btn=>btn.classList.toggle('active', Number(btn.dataset.kg)===px.qty));
       $('custName').value=state.customer.name||''; $('custPhone').value=state.customer.phone||''; $('custAddress').value=state.customer.address||'';
       $('deliveryBanner').textContent=state.config.freeDeliveryText;
       $('shippingText').textContent=zone ? `${zone.name}: ${zone.freeDays}${zone.notes?` · ${zone.notes}`:''}${freeDeliveryForZone(zone)?'':' · Envío estimado '+money(shippingAmount(zone))}` : '';
       const msg=orderMessage(); $('messageBox').textContent=msg; $('waOrderBtn').href=`https://wa.me/${state.config.whatsappOrders}?text=${encodeURIComponent(msg)}`;
       $('repeatOrderBtn').classList.toggle('hidden', !state.lastOrder);
     }
-    function persistOrder(){
-      state.lastOrder={groupKey:ui.selectedGroupKey, variantId:ui.selectedVariantId, fractionMode:ui.fractionMode, fractionKg:ui.fractionKg, customer:{...state.customer}, zoneId:state.customer.zoneId};
-      saveState();
-    }
-    function applyLastOrder(){
-      if(!state.lastOrder) return;
-      ui.selectedGroupKey=state.lastOrder.groupKey; ui.selectedVariantId=state.lastOrder.variantId; ui.fractionMode=!!state.lastOrder.fractionMode; ui.fractionKg=Number(state.lastOrder.fractionKg)||2;
-      state.customer={...state.customer,...(state.lastOrder.customer||{}),zoneId:state.lastOrder.zoneId||state.customer.zoneId};
-      saveState(); renderPublic();
-    }
+    function persistOrder(){state.lastOrder={groupKey:ui.selectedGroupKey,variantId:ui.selectedVariantId,fractionMode:ui.fractionMode,fractionKg:ui.fractionKg,customer:{...state.customer},zoneId:state.customer.zoneId}; saveState()}
+    function applyLastOrder(){if(!state.lastOrder) return; ui.selectedGroupKey=state.lastOrder.groupKey; ui.selectedVariantId=state.lastOrder.variantId; ui.fractionMode=!!state.lastOrder.fractionMode; ui.fractionKg=Number(state.lastOrder.fractionKg)||2; state.customer={...state.customer,...(state.lastOrder.customer||{}),zoneId:state.lastOrder.zoneId||state.customer.zoneId}; saveState(); renderPublic()}
 
     function renderAdmin(){
       $('adminSection').classList.toggle('hidden', !state.ui.adminUnlocked);
-      document.querySelectorAll('.tab').forEach(btn=>btn.classList.toggle('active', btn.dataset.tab===state.ui.activeTab));
-      document.querySelectorAll('.tabPane').forEach(p=>p.classList.add('hidden')); const pane=$(`tab-${state.ui.activeTab}`); if(pane) pane.classList.remove('hidden');
-      $('cfgBrandName').value=state.config.brandName; $('cfgAdminPassword').value=state.config.adminPassword; $('cfgWaOrders').value=state.config.whatsappOrders; $('cfgWaConsult').value=state.config.whatsappConsult; $('cfgMpLink').value=state.config.mercadoPagoLink; $('cfgInstagram').value=state.config.instagram; $('cfgFreeText').value=state.config.freeDeliveryText; $('cfgShippingDefault').value=state.config.shippingDefault;
-      $('cfgMarginBag').value=state.config.marginBag; $('cfgMarginFraction').value=state.config.marginFraction; $('cfgRoundTo').value=state.config.roundTo; $('cfgMpPublicKey').value=state.config.mpPublicKey; $('cfgMpPreferenceUrl').value=state.config.mpPreferenceUrl; $('cfgPaymentMode').value=state.config.paymentMode; $('cfgShowInstagram').value=String(state.config.showInstagram);
+      document.querySelectorAll('.tab').forEach(btn=>btn.classList.toggle('active', btn.dataset.tab===state.ui.activeTab)); document.querySelectorAll('.tabPane').forEach(p=>p.classList.add('hidden')); const pane=$(`tab-${state.ui.activeTab}`); if(pane) pane.classList.remove('hidden');
+      $('cfgBrandName').value=state.config.brandName; $('cfgAdminPassword').value=state.config.adminPassword; $('cfgWaOrders').value=state.config.whatsappOrders; $('cfgWaConsult').value=state.config.whatsappConsult; $('cfgMpLink').value=state.config.mercadoPagoLink; $('cfgInstagram').value=state.config.instagram; $('cfgFreeText').value=state.config.freeDeliveryText; $('cfgShippingDefault').value=state.config.shippingDefault; $('cfgMarginBag').value=state.config.marginBag; $('cfgMarginFraction').value=state.config.marginFraction; $('cfgRoundTo').value=state.config.roundTo; $('cfgMpPublicKey').value=state.config.mpPublicKey; $('cfgMpPreferenceUrl').value=state.config.mpPreferenceUrl; $('cfgPaymentMode').value=state.config.paymentMode; $('cfgShowInstagram').value=String(state.config.showInstagram);
       renderBulkValue(); renderProductsTable(); renderZones();
     }
     function renderBulkValue(){
       const target=$('bulkTarget').value||'all'; let opts=['Todos'];
       if(target==='source') opts=sources().filter(x=>x!=='Todos');
       if(target==='brand') opts=[...new Set(state.products.map(p=>p.brand))];
+      if(target==='category') opts=[...new Set(state.products.map(p=>p.category||'Sin categoría'))];
       if(target==='groupKey') opts=[...new Set(state.products.map(p=>p.groupKey||''))].filter(Boolean);
       $('bulkValue').innerHTML=opts.map(x=>`<option value="${x}">${x}</option>`).join('');
     }
     function renderProductsTable(){
-      const head=`<tr><th>Activo</th><th>Origen</th><th>Grupo</th><th>Especie</th><th>Marca</th><th>Nombre público</th><th>Kg</th><th>Costo</th><th>Frac.</th><th>Margen bolsa</th><th>Margen frac.</th><th>Eliminar</th></tr>`;
-      const rows=state.products.map(p=>`<tr data-id="${p.id}">
-        <td><input type="checkbox" data-k="active" ${p.active!==false?'checked':''}></td>
-        <td><input data-k="source" value="${escapeAttr(p.source||'')}" /></td>
-        <td><input data-k="groupKey" value="${escapeAttr(p.groupKey||'')}" /></td>
-        <td><select data-k="species"><option ${p.species==='Perros'?'selected':''}>Perros</option><option ${p.species==='Gatos'?'selected':''}>Gatos</option></select></td>
-        <td><input data-k="brand" value="${escapeAttr(p.brand||'')}" /></td>
-        <td><input data-k="publicName" value="${escapeAttr(p.publicName||'')}" /></td>
-        <td><input data-k="sizeKg" type="number" step="0.1" value="${p.sizeKg}" /></td>
-        <td><input data-k="baseCost" type="number" step="0.01" value="${p.baseCost}" /></td>
-        <td><input type="checkbox" data-k="fractionable" ${p.fractionable?'checked':''}></td>
-        <td><input data-k="marginBag" type="number" step="0.1" value="${p.marginBag==null?'':p.marginBag}" placeholder="global" /></td>
-        <td><input data-k="marginFraction" type="number" step="0.1" value="${p.marginFraction==null?'':p.marginFraction}" placeholder="global" /></td>
-        <td><button class="btn warn delRow" data-id="${p.id}">Borrar</button></td>
-      </tr>`).join('');
+      const head=`<tr><th>Activo</th><th>Origen</th><th>Categoría</th><th>Especie</th><th>Marca</th><th>Grupo</th><th>Nombre público</th><th>Presentación</th><th>Cantidad</th><th>Unidad</th><th>Costo</th><th>Frac.</th><th>Margen bolsa</th><th>Margen frac.</th><th>Eliminar</th></tr>`;
+      const rows=state.products.map(p=>`<tr data-id="${p.id}"><td><input type="checkbox" data-k="active" ${p.active!==false?'checked':''}></td><td><input data-k="source" value="${esc(p.source||'')}" /></td><td><input data-k="category" value="${esc(p.category||'')}" /></td><td><select data-k="species"><option ${p.species==='Perros'?'selected':''}>Perros</option><option ${p.species==='Gatos'?'selected':''}>Gatos</option><option ${p.species==='General'?'selected':''}>General</option></select></td><td><input data-k="brand" value="${esc(p.brand||'')}" /></td><td><input data-k="groupKey" value="${esc(p.groupKey||'')}" /></td><td><input data-k="publicName" value="${esc(p.publicName||'')}" /></td><td><input data-k="variantLabel" value="${esc(p.variantLabel||'')}" /></td><td><input data-k="packQty" type="number" step="0.1" value="${p.packQty}" /></td><td><input data-k="unitType" value="${esc(p.unitType||'kg')}" /></td><td><input data-k="baseCost" type="number" step="0.01" value="${p.baseCost}" /></td><td><input type="checkbox" data-k="fractionable" ${p.fractionable?'checked':''}></td><td><input data-k="marginBag" type="number" step="0.1" value="${p.marginBag==null?'':p.marginBag}" placeholder="global" /></td><td><input data-k="marginFraction" type="number" step="0.1" value="${p.marginFraction==null?'':p.marginFraction}" placeholder="global" /></td><td><button class="btn warn delRow" data-id="${p.id}">Borrar</button></td></tr>`).join('');
       $('productsTable').innerHTML=head+rows;
       $('productsTable').querySelectorAll('input,select').forEach(inp=>inp.addEventListener('change',onProductsTableChange));
       $('productsTable').querySelectorAll('.delRow').forEach(btn=>btn.addEventListener('click',()=>{state.products=state.products.filter(p=>Number(p.id)!==Number(btn.dataset.id)); saveState(); renderAdmin(); renderPublic()}));
     }
-    function escapeAttr(str){return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
-    function onProductsTableChange(e){
-      const tr=e.target.closest('tr'); const id=Number(tr.dataset.id); const p=state.products.find(x=>Number(x.id)===id); if(!p) return; const key=e.target.dataset.k;
-      if(e.target.type==='checkbox') p[key]=e.target.checked; else if(['sizeKg','baseCost','marginBag','marginFraction'].includes(key)) p[key]=e.target.value===''?null:Number(e.target.value); else p[key]=e.target.value;
-      saveState(); renderPublic();
-    }
+    function esc(str){return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
+    function onProductsTableChange(e){const tr=e.target.closest('tr'); const id=Number(tr.dataset.id); const p=state.products.find(x=>Number(x.id)===id); if(!p) return; const key=e.target.dataset.k; if(e.target.type==='checkbox') p[key]=e.target.checked; else if(['packQty','baseCost','marginBag','marginFraction'].includes(key)) p[key]=e.target.value===''?null:Number(e.target.value); else p[key]=e.target.value; saveState(); renderPublic()}
     function renderZones(){
-      $('zonesList').innerHTML=state.zones.map(z=>`<div class="zoneCard" data-id="${z.id}"><div class="inline3"><div class="field"><label>Zona</label><input class="input zoneInput" data-k="name" value="${escapeAttr(z.name)}"></div><div class="field"><label>Días / horario</label><input class="input zoneInput" data-k="freeDays" value="${escapeAttr(z.freeDays)}"></div><div class="field"><label>Costo envío</label><input class="input zoneInput" data-k="extraShipping" type="number" value="${z.extraShipping}"></div></div><div class="inline2" style="margin-top:10px"><div class="field"><label>Nota visible</label><input class="input zoneInput" data-k="notes" value="${escapeAttr(z.notes||'')}"></div><div class="field"><label>Ruta gratis</label><select class="select zoneInput" data-k="free"><option value="true" ${z.free?'selected':''}>Sí</option><option value="false" ${!z.free?'selected':''}>No</option></select></div></div><div class="rowBtns" style="margin-top:10px"><button class="btn warn delZone" data-id="${z.id}">Borrar zona</button></div></div>`).join('');
+      $('zonesList').innerHTML=state.zones.map(z=>`<div class="zoneCard" data-id="${z.id}"><div class="inline3"><div class="field"><label>Zona</label><input class="input zoneInput" data-k="name" value="${esc(z.name)}"></div><div class="field"><label>Días / horario</label><input class="input zoneInput" data-k="freeDays" value="${esc(z.freeDays)}"></div><div class="field"><label>Costo envío</label><input class="input zoneInput" data-k="extraShipping" type="number" value="${z.extraShipping}"></div></div><div class="inline2" style="margin-top:10px"><div class="field"><label>Nota visible</label><input class="input zoneInput" data-k="notes" value="${esc(z.notes||'')}"></div><div class="field"><label>Ruta gratis</label><select class="select zoneInput" data-k="free"><option value="true" ${z.free?'selected':''}>Sí</option><option value="false" ${!z.free?'selected':''}>No</option></select></div></div><div class="rowBtns" style="margin-top:10px"><button class="btn warn delZone" data-id="${z.id}">Borrar zona</button></div></div>`).join('');
       document.querySelectorAll('.zoneInput').forEach(inp=>inp.addEventListener('change',onZoneChange));
       document.querySelectorAll('.delZone').forEach(btn=>btn.addEventListener('click',()=>{state.zones=state.zones.filter(z=>Number(z.id)!==Number(btn.dataset.id)); if(!state.zones.find(z=>Number(z.id)===Number(state.customer.zoneId))&&state.zones[0]) state.customer.zoneId=state.zones[0].id; saveState(); renderAdmin(); renderPublic()}));
     }
-    function onZoneChange(e){const card=e.target.closest('.zoneCard'); const z=state.zones.find(x=>Number(x.id)===Number(card.dataset.id)); if(!z) return; const key=e.target.dataset.k; if(key==='extraShipping') z[key]=Number(e.target.value); else if(key==='free') z[key]=e.target.value==='true'; else z[key]=e.target.value; saveState(); renderPublic();}
+    function onZoneChange(e){const card=e.target.closest('.zoneCard'); const z=state.zones.find(x=>Number(x.id)===Number(card.dataset.id)); if(!z) return; const key=e.target.dataset.k; if(key==='extraShipping') z[key]=Number(e.target.value); else if(key==='free') z[key]=e.target.value==='true'; else z[key]=e.target.value; saveState(); renderPublic()}
 
-    function saveGeneral(){ state.config.brandName=$('cfgBrandName').value.trim()||'PETPOINT'; state.config.adminPassword=$('cfgAdminPassword').value.trim()||'petpoint2026'; state.config.whatsappOrders=$('cfgWaOrders').value.trim(); state.config.whatsappConsult=$('cfgWaConsult').value.trim(); state.config.mercadoPagoLink=$('cfgMpLink').value.trim(); state.config.instagram=$('cfgInstagram').value.trim(); state.config.freeDeliveryText=$('cfgFreeText').value.trim(); state.config.shippingDefault=Number($('cfgShippingDefault').value)||0; saveState(); renderPublic(); alert('Configuración general guardada');}
-    function savePricing(){ state.config.marginBag=Number($('cfgMarginBag').value)||0; state.config.marginFraction=Number($('cfgMarginFraction').value)||0; state.config.roundTo=Number($('cfgRoundTo').value)||100; saveState(); renderPublic(); alert('Configuración de precios guardada');}
-    function saveFuture(){ state.config.mpPublicKey=$('cfgMpPublicKey').value.trim(); state.config.mpPreferenceUrl=$('cfgMpPreferenceUrl').value.trim(); state.config.paymentMode=$('cfgPaymentMode').value; state.config.showInstagram=$('cfgShowInstagram').value==='true'; saveState(); renderPublic(); alert('Configuración futura guardada');}
-    function addProduct(){ state.products.unshift({id:nextId(state.products),source:'Manual',species:'Perros',brand:'Nueva marca',groupKey:'nuevo-grupo',publicName:'Nuevo producto',sizeKg:15,baseCost:0,fractionable:true,marginBag:null,marginFraction:null,active:true}); saveState(); renderAdmin(); renderPublic();}
-    function addZone(){ state.zones.push({id:nextId(state.zones),name:'Nueva zona',freeDays:'A definir',free:false,extraShipping:state.config.shippingDefault,notes:''}); saveState(); renderAdmin(); renderPublic();}
+    function saveGeneral(){state.config.brandName=$('cfgBrandName').value.trim()||'PETPOINT'; state.config.adminPassword=$('cfgAdminPassword').value.trim()||'0007'; state.config.whatsappOrders=$('cfgWaOrders').value.trim(); state.config.whatsappConsult=$('cfgWaConsult').value.trim(); state.config.mercadoPagoLink=$('cfgMpLink').value.trim(); state.config.instagram=$('cfgInstagram').value.trim(); state.config.freeDeliveryText=$('cfgFreeText').value.trim(); state.config.shippingDefault=Number($('cfgShippingDefault').value)||0; saveState(); renderPublic(); alert('Configuración general guardada')}
+    function savePricing(){state.config.marginBag=Number($('cfgMarginBag').value)||0; state.config.marginFraction=Number($('cfgMarginFraction').value)||0; state.config.roundTo=Number($('cfgRoundTo').value)||100; saveState(); renderPublic(); alert('Configuración de precios guardada')}
+    function saveFuture(){state.config.mpPublicKey=$('cfgMpPublicKey').value.trim(); state.config.mpPreferenceUrl=$('cfgMpPreferenceUrl').value.trim(); state.config.paymentMode=$('cfgPaymentMode').value; state.config.showInstagram=$('cfgShowInstagram').value==='true'; saveState(); renderPublic(); alert('Configuración futura guardada')}
+    function addProduct(){state.products.unshift({id:nextId(state.products),source:'Manual',category:'Accesorios',species:'General',brand:'Nueva marca',groupKey:'nuevo-grupo',publicName:'Nuevo producto',variantLabel:'Unidad',packQty:1,unitType:'un',baseCost:0,fractionable:false,marginBag:null,marginFraction:null,active:true}); saveState(); renderAdmin(); renderPublic()}
+    function addZone(){state.zones.push({id:nextId(state.zones),name:'Nueva zona',freeDays:'A definir',free:false,extraShipping:state.config.shippingDefault,notes:''}); saveState(); renderAdmin(); renderPublic()}
     function applyBulk(action){
       const target=$('bulkTarget').value; const value=$('bulkValue').value; const pct=Number($('bulkPercent').value||0); if(isNaN(pct)) return alert('Cargá un porcentaje válido');
-      state.products.forEach(p=>{
-        let match=false; if(target==='all') match=true; if(target==='source') match=(p.source||'')===value; if(target==='brand') match=(p.brand||'')===value; if(target==='groupKey') match=(p.groupKey||'')===value; if(!match) return;
-        if(action==='cost') p.baseCost=Number((Number(p.baseCost||0)*(1+pct/100)).toFixed(2));
-        if(action==='bag'){const current=(p.marginBag==null?Number(state.config.marginBag):Number(p.marginBag)); p.marginBag=Number((current+pct).toFixed(2));}
-        if(action==='fraction'){const current=(p.marginFraction==null?Number(state.config.marginFraction):Number(p.marginFraction)); p.marginFraction=Number((current+pct).toFixed(2));}
-      }); saveState(); renderAdmin(); renderPublic(); alert('Ajuste aplicado');
-    }
+      state.products.forEach(p=>{let match=false; if(target==='all') match=true; if(target==='source') match=(p.source||'')===value; if(target==='brand') match=(p.brand||'')===value; if(target==='category') match=(p.category||'')===value; if(target==='groupKey') match=(p.groupKey||'')===value; if(!match) return; if(action==='cost') p.baseCost=Number((Number(p.baseCost||0)*(1+pct/100)).toFixed(2)); if(action==='bag'){const current=(p.marginBag==null?Number(state.config.marginBag):Number(p.marginBag)); p.marginBag=Number((current+pct).toFixed(2));} if(action==='fraction'){const current=(p.marginFraction==null?Number(state.config.marginFraction):Number(p.marginFraction)); p.marginFraction=Number((current+pct).toFixed(2));}}); saveState(); renderAdmin(); renderPublic(); alert('Ajuste aplicado')}
     function exportBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='petpoint-backup.json'; a.click(); URL.revokeObjectURL(url)}
     function importJson(file){const reader=new FileReader(); reader.onload=()=>{try{const data=JSON.parse(reader.result); const merged=mergeState(JSON.parse(JSON.stringify(DEFAULT_STATE)), data); Object.assign(state, merged); saveState(); renderAdmin(); renderPublic(); alert('Backup importado')}catch(e){alert('No se pudo importar el JSON')}}; reader.readAsText(file)}
     function parseCSV(text){const lines=text.trim().split(/
 ?
 /); if(lines.length<2) return []; const header=lines[0].split(',').map(x=>x.trim()); return lines.slice(1).filter(Boolean).map(line=>{const cols=[]; let cur='',q=false; for(let i=0;i<line.length;i++){const ch=line[i]; if(ch==='"') q=!q; else if(ch===','&&!q){cols.push(cur); cur='';} else cur+=ch;} cols.push(cur); const obj={}; header.forEach((h,i)=>obj[h]=String(cols[i]||'').trim().replace(/^"|"$/g,'')); return obj})}
-    function importCsv(file){const reader=new FileReader(); reader.onload=()=>{try{const rows=parseCSV(reader.result); state.products=rows.map((r,ix)=>({id:ix+1,source:r.source||'Importado',species:r.species||'Perros',brand:r.brand||'Marca',groupKey:r.groupKey||'grupo',publicName:r.publicName||'Producto',sizeKg:Number(r.sizeKg||0),baseCost:Number(r.baseCost||0),fractionable:String(r.fractionable||'true').toLowerCase()!=='false',marginBag:r.marginBag===''||r.marginBag==null?null:Number(r.marginBag),marginFraction:r.marginFraction===''||r.marginFraction==null?null:Number(r.marginFraction),active:true})); saveState(); renderAdmin(); renderPublic(); alert('CSV importado y productos reemplazados')}catch(e){alert('No se pudo importar el CSV')}}; reader.readAsText(file)}
+    function importCsv(file){const reader=new FileReader(); reader.onload=()=>{try{const rows=parseCSV(reader.result); state.products=rows.map((r,ix)=>({id:ix+1,source:r.source||'Importado',category:r.category||'Alimento',species:r.species||'General',brand:r.brand||'Marca',groupKey:r.groupKey||'grupo',publicName:r.publicName||'Producto',variantLabel:r.variantLabel||'Unidad',packQty:Number(r.packQty||1),unitType:r.unitType||'un',baseCost:Number(r.baseCost||0),fractionable:String(r.fractionable||'false').toLowerCase()==='true',marginBag:r.marginBag===''||r.marginBag==null?null:Number(r.marginBag),marginFraction:r.marginFraction===''||r.marginFraction==null?null:Number(r.marginFraction),active:true})); saveState(); renderAdmin(); renderPublic(); alert('CSV importado y productos reemplazados')}catch(e){alert('No se pudo importar el CSV')}}; reader.readAsText(file)}
 
     function bindPublicEvents(){
       $('search').addEventListener('input',e=>{ui.search=e.target.value; renderPublic()});
       $('species').addEventListener('change',e=>{ui.species=e.target.value; renderPublic()});
+      $('category').addEventListener('change',e=>{ui.category=e.target.value; renderPublic()});
       $('brand').addEventListener('change',e=>{ui.brand=e.target.value; renderPublic()});
       $('variantSelect').addEventListener('change',e=>{ui.selectedVariantId=Number(e.target.value); renderPublic()});
       $('fractionMode').addEventListener('change',e=>{ui.fractionMode=e.target.checked; renderPublic()});
@@ -558,10 +530,11 @@ Salice,Perros,Maintenance,maintenance-criadores-adulto,Criadores Adultos,22,3410
       $('saveGeneral').addEventListener('click',saveGeneral); $('savePricing').addEventListener('click',savePricing); $('saveFuture').addEventListener('click',saveFuture); $('addProduct').addEventListener('click',addProduct); $('addZone').addEventListener('click',addZone); $('bulkTarget').addEventListener('change',renderBulkValue); $('applyBulkCost').addEventListener('click',()=>applyBulk('cost')); $('applyBulkMarginBag').addEventListener('click',()=>applyBulk('bag')); $('applyBulkMarginFraction').addEventListener('click',()=>applyBulk('fraction')); $('exportBackup').addEventListener('click',exportBackup); $('importJsonBtn').addEventListener('click',()=>{const f=$('jsonFile').files[0]; if(f) importJson(f); else alert('Elegí un JSON')}); $('importCsvBtn').addEventListener('click',()=>{const f=$('csvFile').files[0]; if(f) importCsv(f); else alert('Elegí un CSV')});
     }
 
-    renderBrandSelect(); renderZoneSelect(); bindPublicEvents(); bindAdminEvents(); renderPublic(); renderAdmin();
+    renderFilterSelects(); renderZoneSelect(); bindPublicEvents(); bindAdminEvents(); renderPublic(); renderAdmin();
   </script>
 </body>
 </html>
+
 
 
 
