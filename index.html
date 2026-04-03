@@ -404,6 +404,259 @@
     $('exportBtn').addEventListener('click', exportBackup); $('importCsvBtn').addEventListener('click', () => { const f=$('csvFile').files[0]; if(f) importCSV(f); else alert('Elegí un CSV'); }); $('importJsonBtn').addEventListener('click', () => { const f=$('jsonFile').files[0]; if(f) importJSON(f); else alert('Elegí un JSON'); });
 
     renderPublic(); renderAdmin();
+  <script>
+    const STORAGE_KEY='petpoint_simple_v1';
+    const DEFAULT_STATE={
+      config:{brandName:'PETPOINT',adminPassword:'0007',whatsappOrders:'5492262655225',whatsappConsult:'5492262655225',instagram:'',mercadoPagoLink:'',freeDeliveryText:'Miércoles, viernes y sábado envío gratis',shippingDefault:2500,marginBag:10,marginFraction:18,roundTo:100,mpPublicKey:'',mpPreferenceUrl:''},
+      zones:[
+        {id:1,name:'Centro Necochea',freeDays:'Miércoles y viernes',free:true,extraShipping:1800,notes:'Gratis en rutas programadas'},
+        {id:2,name:'Quequén',freeDays:'Viernes y sábado',free:true,extraShipping:2500,notes:'Gratis en días asignados'},
+        {id:3,name:'Otra zona',freeDays:'A coordinar',free:false,extraShipping:3000,notes:'Consultar costo según distancia'}
+      ],
+      products:[
+        {id:1,source:'Alarcon',category:'Alimento',species:'Perros',brand:'Old Prince',groupKey:'op-equilibrium-adulto-mg',publicName:'Equilibrium Adulto Medium & Large',variantLabel:'20 kg',packQty:20,unitType:'kg',baseCost:64770.1,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:2,source:'Alarcon',category:'Alimento',species:'Perros',brand:'Old Prince',groupKey:'op-premium-cordero',publicName:'Premium Adulto Cordero y Arroz',variantLabel:'15 kg',packQty:15,unitType:'kg',baseCost:62990,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:3,source:'Salice',category:'Alimento',species:'Perros',brand:'Kongo',groupKey:'kongo-natural-adulto-mg',publicName:'Natural Adultos Medianos y Grandes',variantLabel:'21 kg',packQty:21,unitType:'kg',baseCost:30267.55,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:4,source:'Salice',category:'Alimento',species:'Perros',brand:'Maintenance',groupKey:'maintenance-criadores-adulto',publicName:'Criadores Adultos',variantLabel:'22 kg',packQty:22,unitType:'kg',baseCost:28991.68,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:5,source:'Salice',category:'Alimento',species:'Perros',brand:'Voraz',groupKey:'voraz-adulto-carne',publicName:'Adulto Carne',variantLabel:'20 kg',packQty:20,unitType:'kg',baseCost:20349.04,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:6,source:'Royal Canin',category:'Alimento',species:'Perros',brand:'Royal Canin',groupKey:'rc-medium-adult',publicName:'Medium Adult',variantLabel:'15 kg',packQty:15,unitType:'kg',baseCost:155229.91,fractionable:false,marginBag:null,marginFraction:null,active:true},
+        {id:7,source:'Alarcon',category:'Alimento',species:'Gatos',brand:'Old Prince',groupKey:'op-cats-complete-care',publicName:'Cats Complete Care',variantLabel:'7,5 kg',packQty:7.5,unitType:'kg',baseCost:51921.26,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:8,source:'Salice',category:'Alimento',species:'Gatos',brand:'Kongo',groupKey:'kongo-gato-natural-carne-pollo',publicName:'Gato Adulto Natural Carne y Pollo',variantLabel:'8 kg',packQty:8,unitType:'kg',baseCost:21839.09,fractionable:true,marginBag:null,marginFraction:null,active:true},
+        {id:9,source:'Royal Canin',category:'Alimento',species:'Gatos',brand:'Royal Canin',groupKey:'rc-kitten',publicName:'Kitten',variantLabel:'1,5 kg',packQty:1.5,unitType:'kg',baseCost:37553.16,fractionable:false,marginBag:null,marginFraction:null,active:true},
+        {id:10,source:'Manual',category:'Accesorios',species:'General',brand:'PETPOINT',groupKey:'collar-clasico',publicName:'Collar clásico',variantLabel:'Unidad',packQty:1,unitType:'un',baseCost:4500,fractionable:false,marginBag:35,marginFraction:null,active:false}
+      ],
+      customer:{name:'',phone:'',address:'',zoneId:1},
+      lastOrder:null,
+      adminOpen:false
+    };
+
+    const state = (() => { try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? merge(structuredClone(DEFAULT_STATE), JSON.parse(raw)) : structuredClone(DEFAULT_STATE); } catch { return structuredClone(DEFAULT_STATE); } })();
+    const ui = { search:'', species:'Todos', category:'Todas', brand:'Todas', selectedGroupKey:null, selectedVariantId:null, fractionMode:true, fractionKg:2 };
+    const $ = id => document.getElementById(id);
+    const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const money = v => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(Number(v||0));
+    const roundStep = (v,s) => Math.round(Number(v||0)/Number(s||1))*Number(s||1);
+    
+    function merge(base, custom){ if(!custom||typeof custom!=='object') return base; for(const k in custom){ if(Array.isArray(custom[k])) base[k]=custom[k]; else if(custom[k]&&typeof custom[k]==='object'&&base[k]&&typeof base[k]==='object') base[k]=merge(base[k],custom[k]); else base[k]=custom[k]; } return base; }
+    function nextId(arr){ return arr.length ? Math.max(...arr.map(x=>Number(x.id)||0))+1 : 1; }
+    function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+    function activeProducts(){ return state.products.filter(p => p.active !== false); }
+    function categories(){ return ['Todas', ...new Set(activeProducts().map(p => p.category || 'Sin categoría'))]; }
+    function brands(){ return ['Todas', ...new Set(activeProducts().map(p => p.brand))]; }
+    function sources(){ return ['Todos', ...new Set(state.products.map(p => p.source || 'Sin origen'))]; }
+    
+    function groups(){
+      const map = new Map();
+      activeProducts().forEach(p => {
+        const key = p.groupKey || `${p.brand}-${p.publicName}`;
+        if(!map.has(key)) map.set(key, { groupKey:key, brand:p.brand, species:p.species, category:p.category||'Sin categoría', publicName:p.publicName, variants:[] });
+        map.get(key).variants.push(p);
+      });
+      return [...map.values()].map(g => ({ ...g, variants:g.variants.sort((a,b) => Number(a.packQty)-Number(b.packQty)) }));
+    }
+    
+    function filteredGroups(){
+      return groups().filter(g => {
+        const s = ui.species==='Todos' || g.species===ui.species;
+        const c = ui.category==='Todas' || g.category===ui.category;
+        const b = ui.brand==='Todas' || g.brand===ui.brand;
+        const q = ui.search.trim().toLowerCase();
+        const txt = `${g.brand} ${g.publicName} ${g.category} ${g.species}`.toLowerCase();
+        return s && c && b && (!q || txt.includes(q));
+      });
+    }
+    
+    function selectedGroup(){
+      const list = filteredGroups();
+      if(!list.length) return null;
+      if(!list.find(g => g.groupKey===ui.selectedGroupKey)) ui.selectedGroupKey = list[0].groupKey;
+      return list.find(g => g.groupKey===ui.selectedGroupKey) || list[0];
+    }
+    
+    function selectedVariant(){
+      const g = selectedGroup();
+      if(!g) return null;
+      if(!g.variants.find(v => Number(v.id)===Number(ui.selectedVariantId))) ui.selectedVariantId = g.variants[0].id;
+      return g.variants.find(v => Number(v.id)===Number(ui.selectedVariantId)) || g.variants[0];
+    }
+    
+    function margins(p){
+      return {
+        bag: p.marginBag==null ? Number(state.config.marginBag) : Number(p.marginBag),
+        fraction: p.marginFraction==null ? Number(state.config.marginFraction) : Number(p.marginFraction)
+      };
+    }
+    
+    function variantText(p){ return p.variantLabel || `${p.packQty} ${p.unitType}`; }
+    
+    function priceInfo(p){
+      const m = margins(p);
+      const bag = roundStep(Number(p.baseCost) * (1 + m.bag/100), state.config.roundTo);
+      const perUnit = p.unitType==='kg' ? Number(p.baseCost) / Math.max(Number(p.packQty)||1,1) : Number(p.baseCost);
+      const perKg = roundStep(perUnit * (1 + m.fraction/100), state.config.roundTo);
+      const max = Math.max(1, Math.floor(Number(p.packQty)||1));
+      const kg = Math.min(Math.max(Number(ui.fractionKg)||1,1), max);
+      return { bag, perKg, kg, total: perKg*kg, max };
+    }
+    
+    function selectedZone(){ return state.zones.find(z => Number(z.id)===Number(state.customer.zoneId)) || state.zones[0]; }
+    
+    function shippingText(){
+      const z = selectedZone();
+      if(!z) return '';
+      return z.free ? `${z.name}: ${z.freeDays}${z.notes?` · ${z.notes}`:''}` : `${z.name}: ${z.freeDays} · Envío estimado ${money(z.extraShipping||state.config.shippingDefault)}`;
+    }
+    
+    function orderMessage(){
+      const g = selectedGroup(), v = selectedVariant(); if(!g||!v) return '';
+      const px = priceInfo(v), z = selectedZone(), c = state.customer;
+      const base = `Hola ${state.config.brandName}, quiero hacer este pedido:\n• Cliente: ${c.name||'-'}\n• Zona: ${z?.name||'-'}\n• Dirección: ${c.address||'-'}\n• Teléfono: ${c.phone||'-'}`;
+      const ship = z?.free ? `\n• Beneficio: ${state.config.freeDeliveryText}` : `\n• Envío estimado: ${money(z?.extraShipping||state.config.shippingDefault)}`;
+      if(ui.fractionMode && v.fractionable && v.unitType==='kg') return `${base}\n• Producto: ${g.brand} - ${g.publicName}\n• Presentación base: ${variantText(v)}\n• Cantidad: ${px.kg} kg fraccionado\n• Precio estimado: ${money(px.total)}${ship}`;
+      return `${base}\n• Producto: ${g.brand} - ${g.publicName}\n• Presentación: ${variantText(v)}\n• Precio estimado: ${money(px.bag)}${ship}`;
+    }
+    
+    function syncTop(){
+      document.title = `${state.config.brandName} | PETPOINT`;
+      $('brandTop').textContent = state.config.brandName;
+      $('freeTextMini').textContent = state.config.freeDeliveryText;
+      const consult = `https://wa.me/${state.config.whatsappConsult}?text=${encodeURIComponent('Hola, quiero hacer una consulta sobre los productos de '+state.config.brandName)}`;
+      $('consultBtnTop').href = consult; $('consultBtnSide').href = consult;
+      const ig = String(state.config.instagram||'').trim(); $('instagramBtn').classList.toggle('hidden', !ig); if(ig) $('instagramBtn').href = ig;
+      const mp = String(state.config.mercadoPagoLink||'').trim(); $('mpBtn').classList.toggle('hidden', !mp); if(mp) $('mpBtn').href = mp;
+    }
+    
+    function renderFilters(){
+      $('category').innerHTML = categories().map(c => `<option value="${c}">${c}</option>`).join(''); $('category').value = ui.category;
+      $('brand').innerHTML = brands().map(b => `<option value="${b}">${b==='Todas'?'Todas las marcas':b}</option>`).join(''); $('brand').value = ui.brand;
+      $('zoneSelect').innerHTML = state.zones.map(z => `<option value="${z.id}">${z.name}</option>`).join(''); $('zoneSelect').value = String(state.customer.zoneId || state.zones[0]?.id || 1);
+    }
+    
+    function renderGroups(){
+      const list = filteredGroups();
+      if(!list.length){ $('groups').innerHTML = '<div class="card pad"><div class="title" style="font-size:20px">No encontramos productos</div><p class="sub">Probá cambiando filtros o el buscador.</p></div>'; return; }
+      if(!list.find(g => g.groupKey===ui.selectedGroupKey)) ui.selectedGroupKey = list[0].groupKey;
+      $('groups').innerHTML = list.map(g => {
+        const cheapest = Math.min(...g.variants.map(v => priceInfo(v).bag));
+        const chips = g.variants.map(v => `<span class="chip">${variantText(v)}</span>`).join('');
+        return `<div class="group ${g.groupKey===ui.selectedGroupKey?'active':''}" data-group="${g.groupKey}"><div class="between"><div><div class="muted" style="font-size:14px">${g.brand}</div><h3>${g.publicName}</h3></div><span class="tag">${g.category}</span></div><div class="chips">${chips}</div><div class="price">Desde ${money(cheapest)}</div></div>`;
+      }).join('');
+      
+      document.querySelectorAll('.group').forEach(node => node.addEventListener('click', () => { 
+        ui.selectedGroupKey = node.dataset.group; 
+        const g = selectedGroup(); 
+        ui.selectedVariantId = g?.variants[0]?.id; 
+        renderPublic();
+        // Mejora intuitiva: hacer scroll suave hacia la selección
+        if(window.innerWidth <= 1080) { window.scrollTo({ top: $('catalogo').offsetTop, behavior: 'smooth' }); }
+      }));
+    }
+    
+    function renderVariantSelect(){
+      const g = selectedGroup();
+      $('variantSelect').innerHTML = g ? g.variants.map(v => `<option value="${v.id}">${variantText(v)}</option>`).join('') : '';
+      if(g) $('variantSelect').value = String(ui.selectedVariantId || g.variants[0].id);
+    }
+    
+    function renderPublic(){
+      syncTop(); renderFilters(); renderGroups(); renderVariantSelect();
+      const g = selectedGroup(), v = selectedVariant();
+      if(!g || !v){ return; }
+      const px = priceInfo(v);
+      if(!(v.fractionable && v.unitType==='kg')) ui.fractionMode = false;
+      $('selBrand').textContent = g.brand; $('selName').textContent = g.publicName;
+      $('bagPrice').textContent = money(px.bag); $('kgPrice').textContent = v.unitType==='kg' ? money(px.perKg) : 'No aplica';
+      $('fractionMode').checked = ui.fractionMode; $('fractionMode').disabled = !(v.fractionable && v.unitType==='kg');
+      $('fractionBox').classList.toggle('hidden', !(ui.fractionMode && v.fractionable && v.unitType==='kg'));
+      $('bagBox').classList.toggle('hidden', ui.fractionMode && v.fractionable && v.unitType==='kg');
+      $('kgLabel').textContent = `${px.kg} kg`; $('fractionPricePerKg').textContent = money(px.perKg); $('fractionTotal').textContent = money(px.total);
+      $('bagPresentation').textContent = variantText(v); $('bagTotal').textContent = money(px.bag); $('fractionKg').max = String(px.max); $('fractionKg').value = String(px.kg);
+      document.querySelectorAll('.kg-btn').forEach(btn => btn.classList.toggle('active', Number(btn.dataset.kg)===px.kg));
+      $('custName').value = state.customer.name || ''; $('custPhone').value = state.customer.phone || ''; $('custAddress').value = state.customer.address || '';
+      $('freeBanner').textContent = state.config.freeDeliveryText; $('shippingInfo').textContent = shippingText();
+      const msg = orderMessage(); $('messageBox').textContent = msg; $('orderBtn').href = `https://wa.me/${state.config.whatsappOrders}?text=${encodeURIComponent(msg)}`;
+      $('repeatBtn').classList.toggle('hidden', !state.lastOrder);
+    }
+    
+    // --- ESTA ES LA PARTE QUE FALTABA Y CORTABA TODO ---
+    
+    function persistLastOrder(){ 
+        const v=selectedVariant(); 
+        state.lastOrder={groupKey:ui.selectedGroupKey,variantId:v?.id,fractionMode:ui.fractionMode,fractionKg:ui.fractionKg,customer:{...state.customer},zoneId:state.customer.zoneId}; 
+        save(); 
+    }
+    
+    function repeatLastOrder(){ 
+        if(!state.lastOrder) return; 
+        ui.selectedGroupKey = state.lastOrder.groupKey;
+        ui.selectedVariantId = state.lastOrder.variantId;
+        ui.fractionMode = state.lastOrder.fractionMode;
+        ui.fractionKg = state.lastOrder.fractionKg;
+        state.customer = {...state.lastOrder.customer};
+        renderPublic();
+    }
+
+    // Vinculamos todos los clicks y listas desplegables
+    function setupEvents() {
+        // Buscador y filtros
+        $('search').addEventListener('input', e => { ui.search = e.target.value; renderPublic(); });
+        $('species').addEventListener('change', e => { ui.species = e.target.value; renderPublic(); });
+        $('category').addEventListener('change', e => { ui.category = e.target.value; renderPublic(); });
+        $('brand').addEventListener('change', e => { ui.brand = e.target.value; renderPublic(); });
+        $('variantSelect').addEventListener('change', e => { ui.selectedVariantId = Number(e.target.value); renderPublic(); });
+        
+        // Fraccionado vs Bolsa
+        $('fractionMode').addEventListener('change', e => { ui.fractionMode = e.target.checked; renderPublic(); });
+        $('fractionKg').addEventListener('input', e => { ui.fractionKg = Number(e.target.value); renderPublic(); });
+        
+        // Botones de kilos rápidos
+        document.querySelectorAll('.kg-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                ui.fractionKg = Number(e.target.dataset.kg);
+                renderPublic();
+            });
+        });
+
+        // Guardado automático de datos del cliente
+        $('custName').addEventListener('input', e => { state.customer.name = e.target.value; save(); renderPublic(); });
+        $('custPhone').addEventListener('input', e => { state.customer.phone = e.target.value; save(); renderPublic(); });
+        $('custAddress').addEventListener('input', e => { state.customer.address = e.target.value; save(); renderPublic(); });
+        $('zoneSelect').addEventListener('change', e => { state.customer.zoneId = Number(e.target.value); save(); renderPublic(); });
+
+        // Botón de pedido
+        $('orderBtn').addEventListener('click', persistLastOrder);
+        $('repeatBtn').addEventListener('click', repeatLastOrder);
+
+        // Sistema de Login del Panel de Control (Clave por defecto: 0007)
+        $('openAdmin').addEventListener('click', () => {
+            $('loginModal').classList.remove('hidden');
+            $('loginError').textContent = '';
+        });
+        
+        $('cancelLogin').addEventListener('click', () => $('loginModal').classList.add('hidden'));
+        
+        $('loginBtn').addEventListener('click', () => {
+            if ($('loginPassword').value === state.config.adminPassword) {
+                $('adminSection').classList.remove('hidden');
+                $('loginModal').classList.add('hidden');
+                $('loginPassword').value = '';
+                // Mejoramos la intuición deslizando al usuario hacia el panel
+                window.scrollTo({ top: $('adminSection').offsetTop, behavior: 'smooth' });
+            } else {
+                $('loginError').textContent = 'Contraseña incorrecta (Ayuda: la clave de fábrica es 0007)';
+            }
+        });
+
+        $('closeAdmin').addEventListener('click', () => {
+            $('adminSection').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // Arrancamos la aplicación
+    setupEvents();
+    renderPublic();
+
   </script>
 </body>
 </html>
